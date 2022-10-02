@@ -230,7 +230,6 @@
             this.bunifuSnackbar1.MaximumSize = new System.Drawing.Size(0, 0);
             this.bunifuSnackbar1.MaximumViews = 7;
             this.bunifuSnackbar1.MessageRightMargin = 15;
-            this.bunifuSnackbar1.MessageTopMargin = 0;
             this.bunifuSnackbar1.MinimumSize = new System.Drawing.Size(0, 0);
             this.bunifuSnackbar1.ShowBorders = false;
             this.bunifuSnackbar1.ShowCloseIcon = false;
