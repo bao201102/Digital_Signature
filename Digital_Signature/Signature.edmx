@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_RSAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_key">
+          <Key>
+            <PropertyRef Name="sig_id" />
+          </Key>
+          <Property Name="sig_id" Type="int" Nullable="false" />
+          <Property Name="private_key" Type="int" Nullable="false" />
+          <Property Name="public_key" Type="int" Nullable="false" />
+          <Property Name="n" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_student">
+          <Key>
+            <PropertyRef Name="stu_id" />
+          </Key>
+          <Property Name="stu_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="birthday" Type="date" Nullable="false" />
+          <Property Name="graduation_year" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="place_of_birth" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="religion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="user_type_id" Type="int" Nullable="false" />
+          <Property Name="sig_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_usertype">
+          <Key>
+            <PropertyRef Name="user_type_id" />
+          </Key>
+          <Property Name="user_type_id" Type="int" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_student_tbl_user">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+          <End Role="tbl_student" Type="Self.tbl_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="tbl_student">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_user_tbl_key">
+          <End Role="tbl_key" Type="Self.tbl_key" Multiplicity="0..1" />
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_key">
+              <PropertyRef Name="sig_id" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="sig_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_user_tbl_usertype">
+          <End Role="tbl_usertype" Type="Self.tbl_usertype" Multiplicity="1" />
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_usertype">
+              <PropertyRef Name="user_type_id" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="user_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_RSAModelStoreContainer">
+          <EntitySet Name="tbl_key" EntityType="Self.tbl_key" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_student" EntityType="Self.tbl_student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_usertype" EntityType="Self.tbl_usertype" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_student_tbl_user" Association="Self.FK_tbl_student_tbl_user">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_student" EntitySet="tbl_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_user_tbl_key" Association="Self.FK_tbl_user_tbl_key">
+            <End Role="tbl_key" EntitySet="tbl_key" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_user_tbl_usertype" Association="Self.FK_tbl_user_tbl_usertype">
+            <End Role="tbl_usertype" EntitySet="tbl_usertype" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_RSAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="db_RSAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_key" EntityType="db_RSAModel.tbl_key" />
+          <EntitySet Name="tbl_student" EntityType="db_RSAModel.tbl_student" />
+          <EntitySet Name="tbl_user" EntityType="db_RSAModel.tbl_user" />
+          <EntitySet Name="tbl_usertype" EntityType="db_RSAModel.tbl_usertype" />
+          <AssociationSet Name="FK_tbl_user_tbl_key" Association="db_RSAModel.FK_tbl_user_tbl_key">
+            <End Role="tbl_key" EntitySet="tbl_key" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_student_tbl_user" Association="db_RSAModel.FK_tbl_student_tbl_user">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_student" EntitySet="tbl_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_user_tbl_usertype" Association="db_RSAModel.FK_tbl_user_tbl_usertype">
+            <End Role="tbl_usertype" EntitySet="tbl_usertype" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbl_key">
+          <Key>
+            <PropertyRef Name="sig_id" />
+          </Key>
+          <Property Name="sig_id" Type="Int32" Nullable="false" />
+          <Property Name="private_key" Type="Int32" Nullable="false" />
+          <Property Name="public_key" Type="Int32" Nullable="false" />
+          <Property Name="n" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_user_tbl_key" FromRole="tbl_key" ToRole="tbl_user" />
+        </EntityType>
+        <EntityType Name="tbl_student">
+          <Key>
+            <PropertyRef Name="stu_id" />
+          </Key>
+          <Property Name="stu_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sex" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="graduation_year" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="place_of_birth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="religion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_student_tbl_user" FromRole="tbl_student" ToRole="tbl_user" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="user_type_id" Type="Int32" Nullable="false" />
+          <Property Name="sig_id" Type="Int32" />
+          <NavigationProperty Name="tbl_key" Relationship="db_RSAModel.FK_tbl_user_tbl_key" FromRole="tbl_user" ToRole="tbl_key" />
+          <NavigationProperty Name="tbl_student" Relationship="db_RSAModel.FK_tbl_student_tbl_user" FromRole="tbl_user" ToRole="tbl_student" />
+          <NavigationProperty Name="tbl_usertype" Relationship="db_RSAModel.FK_tbl_user_tbl_usertype" FromRole="tbl_user" ToRole="tbl_usertype" />
+        </EntityType>
+        <EntityType Name="tbl_usertype">
+          <Key>
+            <PropertyRef Name="user_type_id" />
+          </Key>
+          <Property Name="user_type_id" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_user_tbl_usertype" FromRole="tbl_usertype" ToRole="tbl_user" />
+        </EntityType>
+        <Association Name="FK_tbl_user_tbl_key">
+          <End Type="db_RSAModel.tbl_key" Role="tbl_key" Multiplicity="0..1" />
+          <End Type="db_RSAModel.tbl_user" Role="tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_key">
+              <PropertyRef Name="sig_id" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="sig_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_student_tbl_user">
+          <End Type="db_RSAModel.tbl_user" Role="tbl_user" Multiplicity="1" />
+          <End Type="db_RSAModel.tbl_student" Role="tbl_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="tbl_student">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_user_tbl_usertype">
+          <End Type="db_RSAModel.tbl_usertype" Role="tbl_usertype" Multiplicity="1" />
+          <End Type="db_RSAModel.tbl_user" Role="tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_usertype">
+              <PropertyRef Name="user_type_id" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="user_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_RSAModelStoreContainer" CdmEntityContainer="db_RSAEntities">
+          <EntitySetMapping Name="tbl_key">
+            <EntityTypeMapping TypeName="db_RSAModel.tbl_key">
+              <MappingFragment StoreEntitySet="tbl_key">
+                <ScalarProperty Name="n" ColumnName="n" />
+                <ScalarProperty Name="public_key" ColumnName="public_key" />
+                <ScalarProperty Name="private_key" ColumnName="private_key" />
+                <ScalarProperty Name="sig_id" ColumnName="sig_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_student">
+            <EntityTypeMapping TypeName="db_RSAModel.tbl_student">
+              <MappingFragment StoreEntitySet="tbl_student">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="religion" ColumnName="religion" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="place_of_birth" ColumnName="place_of_birth" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="graduation_year" ColumnName="graduation_year" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="stu_id" ColumnName="stu_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_user">
+            <EntityTypeMapping TypeName="db_RSAModel.tbl_user">
+              <MappingFragment StoreEntitySet="tbl_user">
+                <ScalarProperty Name="sig_id" ColumnName="sig_id" />
+                <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_usertype">
+            <EntityTypeMapping TypeName="db_RSAModel.tbl_usertype">
+              <MappingFragment StoreEntitySet="tbl_usertype">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
