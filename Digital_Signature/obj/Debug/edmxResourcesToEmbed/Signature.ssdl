@@ -30,7 +30,7 @@
     </Key>
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="username" Type="varchar" MaxLength="30" Nullable="false" />
-    <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="password" Type="char" MaxLength="32" Nullable="false" />
     <Property Name="user_type_id" Type="int" Nullable="false" />
     <Property Name="sig_id" Type="int" />
   </EntityType>
