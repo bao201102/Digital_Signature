@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Digital_Signature.DAL;
+using Digital_Signature.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,50 @@ namespace Digital_Signature.BLL
 {
     class KeyBLL
     {
+        //  Tạo khóa và add vào CSDL
+        //  Dùng phương thức chonSoNgauNhien để tạo ra hai số p, q;
+        //  Tính  int n = p * q;
+        //  Tạo khóa bí mật: Dùng phương thức createPrivateKey(p,q) 
+        //  Tạo khóa công khai: Dùng phương thức createPublicKey(p,q)
+        //  Tạo khóa mới để thêm vào CSDL: lấy n, private_key, public_key ở trên
+        //  KeyDTO nkey = new KeyDTO(sig_id, private_key, public_key, n);
+        //  KeyBLL.AddNewKey(nkey);
+        //  => Thêm khóa vào CSDL thành công
+        //=======================//
+        //  Muốn lấy ra khóa dùng phương thức getKeyById
+        //=======================//
 
+        public static int chonSoNgauNhien()
+        {
+            return KeyDAL.chonSoNgauNhien();
+        }
+        public static bool kiemTraNguyenTo(int number)
+        {
+            return KeyDAL.kiemTraNguyenTo(number);
+        }
+        public static bool nguyenToCungNhau(int a, int b)
+        {
+            return KeyDAL.nguyenToCungNhau(a, b);
+        }
+        public static int createPrivateKey(int p, int q)
+        {
+            return KeyDAL.createPrivateKey(p, q);
+        }
+        public static int createPublicKey(int p, int q)
+        {
+            return KeyDAL.createPublicKey(p, q);
+        }
+        public static bool addNewKey(KeyDTO nkey)
+        {
+            return KeyDAL.addNewKey(nkey);
+        }
+        public static List<object> getAllKey()
+        {
+            return KeyDAL.getAllKey();
+        }
+        public static List<KeyDTO> getKeyById(int sid)
+        {
+            return KeyDAL.getKeyById(sid);
+        }
     }
 }
