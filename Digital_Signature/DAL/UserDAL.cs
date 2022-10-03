@@ -14,8 +14,8 @@ namespace Digital_Signature.DAL
         {
             db_RSAEntities db_RSAEntities = new db_RSAEntities();
             tbl_user query = (from us in db_RSAEntities.tbl_user
-                         where us.username == username && us.password == password
-                         select us).SingleOrDefault();
+                              where us.username == username && us.password == password
+                              select us).SingleOrDefault();
 
             if (query != null)
             {

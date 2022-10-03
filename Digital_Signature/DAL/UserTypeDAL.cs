@@ -14,8 +14,8 @@ namespace Digital_Signature.DAL
         {
             db_RSAEntities db_RSAEntities = new db_RSAEntities();
             tbl_usertype query = (from usType in db_RSAEntities.tbl_usertype
-                              where usType.user_type_id == userTypeId
-                              select usType).SingleOrDefault();
+                                  where usType.user_type_id == userTypeId
+                                  select usType).SingleOrDefault();
 
             if (query != null)
             {

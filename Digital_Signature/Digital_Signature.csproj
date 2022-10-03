@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Bunifu.Licensing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=f89b4760ba7dcb6b, processorArchitecture=MSIL">
       <HintPath>..\packages\Bunifu.UI.WinForms.5.3.0\lib\net40\Bunifu.Licensing.dll</HintPath>
     </Reference>
@@ -209,26 +212,32 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\Key.cs" />
-    <Compile Include="DTO\Student.cs" />
-    <Compile Include="DTO\User.cs" />
-    <Compile Include="DTO\UserType.cs" />
-    <Compile Include="PLL\frm_Login.cs">
+    <Compile Include="BLL\KeyBLL.cs" />
+    <Compile Include="BLL\UserBLL.cs" />
+    <Compile Include="BLL\UserTypeBLL.cs" />
+    <Compile Include="DAL\KeyDAL.cs" />
+    <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="DAL\UserTypeDAL.cs" />
+    <Compile Include="DTO\KeyDTO.cs" />
+    <Compile Include="DTO\StudentDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\UserTypeDTO.cs" />
+    <Compile Include="PL\frm_Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PLL\frm_Login.Designer.cs">
+    <Compile Include="PL\frm_Login.Designer.cs">
       <DependentUpon>frm_Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="PLL\frm_Sign.cs">
+    <Compile Include="PL\frm_Sign.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PLL\frm_Sign.Designer.cs">
+    <Compile Include="PL\frm_Sign.Designer.cs">
       <DependentUpon>frm_Sign.cs</DependentUpon>
     </Compile>
-    <Compile Include="PLL\frm_Verify.cs">
+    <Compile Include="PL\frm_Verify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PLL\frm_Verify.Designer.cs">
+    <Compile Include="PL\frm_Verify.Designer.cs">
       <DependentUpon>frm_Verify.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -261,10 +270,10 @@
     <Compile Include="tbl_usertype.cs">
       <DependentUpon>Signature.tt</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="PLL\frm_Sign.resx">
+    <EmbeddedResource Include="PL\frm_Sign.resx">
       <DependentUpon>frm_Sign.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PLL\frm_Verify.resx">
+    <EmbeddedResource Include="PL\frm_Verify.resx">
       <DependentUpon>frm_Verify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -278,7 +287,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="PLL\frm_Login.resx">
+    <EmbeddedResource Include="PL\frm_Login.resx">
       <DependentUpon>frm_Login.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -370,9 +379,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BLL\" />
-    <Folder Include="DAL\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

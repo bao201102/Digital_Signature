@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_RSAModelStoreContainer" CdmEntityContainer="db_RSAEntities">
+    <EntitySetMapping Name="tbl_key">
+      <EntityTypeMapping TypeName="db_RSAModel.tbl_key">
+        <MappingFragment StoreEntitySet="tbl_key">
+          <ScalarProperty Name="n" ColumnName="n" />
+          <ScalarProperty Name="public_key" ColumnName="public_key" />
+          <ScalarProperty Name="private_key" ColumnName="private_key" />
+          <ScalarProperty Name="sig_id" ColumnName="sig_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_student">
+      <EntityTypeMapping TypeName="db_RSAModel.tbl_student">
+        <MappingFragment StoreEntitySet="tbl_student">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="religion" ColumnName="religion" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="place_of_birth" ColumnName="place_of_birth" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="graduation_year" ColumnName="graduation_year" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="stu_id" ColumnName="stu_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_user">
+      <EntityTypeMapping TypeName="db_RSAModel.tbl_user">
+        <MappingFragment StoreEntitySet="tbl_user">
+          <ScalarProperty Name="sig_id" ColumnName="sig_id" />
+          <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_usertype">
+      <EntityTypeMapping TypeName="db_RSAModel.tbl_usertype">
+        <MappingFragment StoreEntitySet="tbl_usertype">
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

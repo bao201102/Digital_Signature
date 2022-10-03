@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_RSAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_key">
+    <Key>
+      <PropertyRef Name="sig_id" />
+    </Key>
+    <Property Name="sig_id" Type="int" Nullable="false" />
+    <Property Name="private_key" Type="int" Nullable="false" />
+    <Property Name="public_key" Type="int" Nullable="false" />
+    <Property Name="n" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_student">
+    <Key>
+      <PropertyRef Name="stu_id" />
+    </Key>
+    <Property Name="stu_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="birthday" Type="date" Nullable="false" />
+    <Property Name="graduation_year" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="place_of_birth" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="religion" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="user_type_id" Type="int" Nullable="false" />
+    <Property Name="sig_id" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_usertype">
+    <Key>
+      <PropertyRef Name="user_type_id" />
+    </Key>
+    <Property Name="user_type_id" Type="int" Nullable="false" />
+    <Property Name="type" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tbl_student_tbl_user">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_student" Type="Self.tbl_student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="tbl_student">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_user_tbl_key">
+    <End Role="tbl_key" Type="Self.tbl_key" Multiplicity="0..1" />
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_key">
+        <PropertyRef Name="sig_id" />
+      </Principal>
+      <Dependent Role="tbl_user">
+        <PropertyRef Name="sig_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_user_tbl_usertype">
+    <End Role="tbl_usertype" Type="Self.tbl_usertype" Multiplicity="1" />
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_usertype">
+        <PropertyRef Name="user_type_id" />
+      </Principal>
+      <Dependent Role="tbl_user">
+        <PropertyRef Name="user_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_RSAModelStoreContainer">
+    <EntitySet Name="tbl_key" EntityType="Self.tbl_key" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_student" EntityType="Self.tbl_student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_usertype" EntityType="Self.tbl_usertype" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tbl_student_tbl_user" Association="Self.FK_tbl_student_tbl_user">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_student" EntitySet="tbl_student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_user_tbl_key" Association="Self.FK_tbl_user_tbl_key">
+      <End Role="tbl_key" EntitySet="tbl_key" />
+      <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_user_tbl_usertype" Association="Self.FK_tbl_user_tbl_usertype">
+      <End Role="tbl_usertype" EntitySet="tbl_usertype" />
+      <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

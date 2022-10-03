@@ -263,3 +263,10 @@ D:\Study\Do_an\Digital_Signature\Digital_Signature\obj\Debug\Digital_Signature.c
 D:\Study\Do_an\Digital_Signature\Digital_Signature\obj\Debug\Digital_Signature.csproj.CopyComplete
 D:\Study\Do_an\Digital_Signature\Digital_Signature\obj\Debug\Digital_Signature.exe
 D:\Study\Do_an\Digital_Signature\Digital_Signature\obj\Debug\Digital_Signature.pdb
+D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\db_RSA.mdf
+D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\db_RSA_log.ldf
+D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\AutoMapper.dll
+D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\EntityFramework.dll
+D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\AutoMapper.xml
+D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\EntityFramework.xml
+D:\Workspace\Information Security\Digital_Signature\Digital_Signature\obj\Debug\Digital_Signature.csproj.AssemblyReference.cache
