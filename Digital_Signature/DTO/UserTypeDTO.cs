@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Digital_Signature.DTO
 {
-    internal class UserType
+    internal class UserTypeDTO
     {
         private int _user_type_id;
         public int user_type_id
@@ -23,13 +23,13 @@ namespace Digital_Signature.DTO
         }
 
 
-        public UserType(int user_type_id_, string type_)
+        public UserTypeDTO(int user_type_id_, string type_)
         {
             this.user_type_id = user_type_id_;
             this.type = type_;
         }
 
-        public UserType()
+        public UserTypeDTO()
         {
             this.user_type_id = 0;
             this.type = "";
