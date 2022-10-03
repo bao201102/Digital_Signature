@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Digital_Signature.DTO
 {
-    internal class Key
+    internal class KeyDTO
     {
         private int _sig_id;
         public int sig_id
@@ -37,7 +37,7 @@ namespace Digital_Signature.DTO
         }
 
 
-        public Key(int sig_id_, int private_key_, int public_key_, int n_)
+        public KeyDTO(int sig_id_, int private_key_, int public_key_, int n_)
         {
             this.sig_id = sig_id_;
             this.private_key = private_key_;
@@ -45,7 +45,7 @@ namespace Digital_Signature.DTO
             this.n = n_;
         }
 
-        public Key()
+        public KeyDTO()
         {
             this.sig_id = 0;
             this.private_key = 0;
