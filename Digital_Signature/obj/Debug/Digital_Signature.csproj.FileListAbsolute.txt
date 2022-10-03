@@ -270,3 +270,9 @@ D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\
 D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\AutoMapper.xml
 D:\Workspace\Information Security\Digital_Signature\Digital_Signature\bin\Debug\EntityFramework.xml
 D:\Workspace\Information Security\Digital_Signature\Digital_Signature\obj\Debug\Digital_Signature.csproj.AssemblyReference.cache
+D:\Study\Do_an\Digital_Signature\Digital_Signature\bin\Debug\db_RSA.mdf
+D:\Study\Do_an\Digital_Signature\Digital_Signature\bin\Debug\db_RSA_log.ldf
+D:\Study\Do_an\Digital_Signature\Digital_Signature\bin\Debug\AutoMapper.dll
+D:\Study\Do_an\Digital_Signature\Digital_Signature\bin\Debug\EntityFramework.dll
+D:\Study\Do_an\Digital_Signature\Digital_Signature\bin\Debug\AutoMapper.xml
+D:\Study\Do_an\Digital_Signature\Digital_Signature\bin\Debug\EntityFramework.xml
