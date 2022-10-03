@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -46,10 +47,24 @@ namespace Digital_Signature
                         count++;
                     }
                 }
+                string[] infoHex = new string[infoArr.Length];
                 if(count == infoArr.Length)
                 {
-
-                }else
+                    for (int i = 0; i < infoArr.Length; i++)
+                    {
+                        string hex = "";
+                        foreach(int item in infoArr[i])
+                        {
+                            hex += item + " ";
+                        }
+                        infoHex[i] = hex;
+                    }
+                    for(int i = 0; i < infoHex.Length; i++)
+                    {
+                        MessageBox.Show(infoHex[i]);
+                    }
+                }
+                else
                 {
                     bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 }
