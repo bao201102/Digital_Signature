@@ -274,6 +274,7 @@
             this.Controls.Add(this.titlePanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frm_Verify";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frm_Verify";
             this.titlePanel.ResumeLayout(false);
             this.ResumeLayout(false);
