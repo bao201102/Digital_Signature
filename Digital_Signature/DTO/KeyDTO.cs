@@ -15,8 +15,8 @@ namespace Digital_Signature.DTO
             set { _sig_id = value; }
         }
 
-        private string _private_key;
-        public string private_key
+        private int _private_key;
+        public int private_key
         {
             get { return _private_key; }
             set { _private_key = value; }
@@ -37,7 +37,7 @@ namespace Digital_Signature.DTO
         }
 
 
-        public KeyDTO(int sig_id_, string private_key_, int public_key_, int n_)
+        public KeyDTO(int sig_id_, int private_key_, int public_key_, int n_)
         {
             this.sig_id = sig_id_;
             this.private_key = private_key_;
@@ -48,7 +48,7 @@ namespace Digital_Signature.DTO
         public KeyDTO()
         {
             this.sig_id = 0;
-            this.private_key = "";
+            this.private_key = 0;
             this.public_key = 0;
             this.n = 0;
         }
