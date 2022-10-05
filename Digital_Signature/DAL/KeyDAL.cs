@@ -14,10 +14,10 @@ namespace Digital_Signature.DAL
         //Thêm key vào CSDL
         public static bool addNewKey(KeyDTO nkey)
         {
+            db_RSAEntities db_RSAEntities = new db_RSAEntities();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<KeyDTO, tbl_key>());
             var mapper = new Mapper(config);
             tbl_key key = mapper.Map<tbl_key>(nkey);
-            db_RSAEntities db_RSAEntities = new db_RSAEntities();
             db_RSAEntities.tbl_key.Add(key);
             return db_RSAEntities.SaveChanges() > 0 ? true : false;
         }
