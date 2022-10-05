@@ -70,5 +70,10 @@ namespace Digital_Signature.PL
 
             return sb.ToString();
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

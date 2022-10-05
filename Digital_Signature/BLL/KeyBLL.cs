@@ -22,35 +22,16 @@ namespace Digital_Signature.BLL
         //=======================//
         //  Muốn lấy ra khóa dùng phương thức getKeyById
         //=======================//
-
-        public static int chonSoNgauNhien()
-        {
-            return KeyDAL.chonSoNgauNhien();
-        }
-        public static bool kiemTraNguyenTo(int number)
-        {
-            return KeyDAL.kiemTraNguyenTo(number);
-        }
-        public static bool nguyenToCungNhau(int a, int b)
-        {
-            return KeyDAL.nguyenToCungNhau(a, b);
-        }
-        public static int createPrivateKey(int p, int q)
-        {
-            return KeyDAL.createPrivateKey(p, q);
-        }
-        public static int createPublicKey(int p, int q)
-        {
-            return KeyDAL.createPublicKey(p, q);
-        }
         public static bool addNewKey(KeyDTO nkey)
         {
             return KeyDAL.addNewKey(nkey);
         }
+
         public static List<object> getAllKey()
         {
             return KeyDAL.getAllKey();
         }
+
         public static List<KeyDTO> getKeyById(int sid)
         {
             return KeyDAL.getKeyById(sid);

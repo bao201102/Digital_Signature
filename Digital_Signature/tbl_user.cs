@@ -16,7 +16,8 @@ namespace Digital_Signature
     {
         public tbl_user()
         {
-            this.tbl_student = new HashSet<tbl_student>();
+            this.tbl_student_cipher = new HashSet<tbl_student_cipher>();
+            this.tbl_student_plain = new HashSet<tbl_student_plain>();
         }
     
         public int user_id { get; set; }
@@ -26,7 +27,8 @@ namespace Digital_Signature
         public Nullable<int> sig_id { get; set; }
     
         public virtual tbl_key tbl_key { get; set; }
-        public virtual ICollection<tbl_student> tbl_student { get; set; }
+        public virtual ICollection<tbl_student_cipher> tbl_student_cipher { get; set; }
+        public virtual ICollection<tbl_student_plain> tbl_student_plain { get; set; }
         public virtual tbl_usertype tbl_usertype { get; set; }
     }
 }

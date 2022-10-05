@@ -25,10 +25,7 @@ namespace Digital_Signature
 
         private void frm_Sign_Load(object sender, EventArgs e)
         {
-            if (true)
-            {
-                bunifuSnackbar1.Show(this, "Bạn đã tạo chữ ký thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
-            }
+
         }
 
         private void btnSign_Click(object sender, EventArgs e)
@@ -83,7 +80,7 @@ namespace Digital_Signature
                 {
                     bunifuSnackbar1.Show(this, "Không tìm thấy khóa bí mật. Vui lòng thử lại", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 }
-                
+
             }
         }
 
@@ -99,23 +96,31 @@ namespace Digital_Signature
 
         private void btnCreateSig_Click(object sender, EventArgs e)
         {
-            Random rs = new Random();
-            //Sinh ngẫu nhiên p, q
-            int p = rs.Next(0, 100);
-            int q = rs.Next(0, 100);
-            if(p != q)
+            Random rd = new Random();
+            int p = 0;
+            int q = 0;
+            //Sinh ngẫu nhiên p, q thuoc so nguyen to
+            do
+            {
+                p = rd.Next(0, 99);
+            } while (!CheckPrimeNum(p));
+
+            do
+            {
+                q = rd.Next(0, 99);
+            } while (!CheckPrimeNum(q) || q == p);
+
+            if (p != q)
             {
                 //Sinh khóa bí mật và khóa công khai
-                int publicKey = KeyBLL.createPublicKey(p, q);
-                int privateKey = KeyBLL.createPrivateKey(p, q);
-                string privateKeyStr = this.EncryptMd5(privateKey.ToString());
-                int id = 0;
-                List<object> listKey = KeyBLL.getAllKey();
-                id = listKey.Count + 1;
-                //MessageBox.Show($"Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này");
+                int privateKey = createPrivateKey(p, q);
+                int publicKey = createPublicKey(p, q);
+
+                MessageBox.Show($"q: {q}. Hãy ghi nhớ khóa này");
+                MessageBox.Show($"p: {p}. Hãy ghi nhớ khóa này");
+                MessageBox.Show($"Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này");
                 bunifuSnackbar1.Show(this, $"Tạo chữ ký thành công. Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 MessageBox.Show($"Khóa công khai: {publicKey}");
-                MessageBox.Show($"Khóa bí mật MD5: {privateKeyStr}");
             }
         }
 
@@ -135,5 +140,89 @@ namespace Digital_Signature
 
             return sb.ToString();
         }
+
+        private bool CheckPrimeNum(int num)
+        {
+            int i;
+            for (i = 2; i <= num - 1; i++)
+            {
+                if (num % i == 0)
+                {
+                    return false;
+                }
+            }
+            if (i == num)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //Hàm tạo khóa bí mật
+        private static int createPrivateKey(int p, int q)
+        {
+            int phi = (p - 1) * (q - 1);
+            List<int> ucln = new List<int>();
+
+            int pri = 0;
+            for (int i = 2; i < phi; i++)
+            {
+                if (USCLN(phi, i) == 1)
+                {
+                    ucln.Add(i);
+                }
+            }
+
+            Random rd = new Random();
+            int temp = rd.Next(0, ucln.Count - 1);
+            pri = ucln[temp];
+            return pri;
+        }
+
+        //Hàm tạo khóa công khai
+        private static int createPublicKey(int p, int q)
+        {
+            // r = pri * x + phi * y
+            int phi = (p - 1) * (q - 1);
+            int pri = createPrivateKey(p, q);
+            List<double> ri = new List<double>() { phi, pri };
+            List<double> qi = new List<double>() { 0, 0 };
+            List<double> yi = new List<double>() { 1, 0 };
+            List<double> xi = new List<double>() { 0, 1 };
+
+            for (int i = 0; ; i++)
+            {
+                int j = i + 1;
+
+                qi.Add(Math.Floor(ri[i] / ri[j]));
+                ri.Add(ri[i] % ri[j]);
+                yi.Add(yi[i] - (qi[j + 1] * yi[j]));
+                if (ri[j + 1] == 0)
+                {
+                    break;
+                }
+            }
+
+            for (int i = 2; i < ri.Count - 1; i++)
+            {
+                xi.Add((ri[i] - phi * yi[i]) / pri);
+            }
+
+            int result = (int)xi[xi.Count - 1];
+
+            if (result < 0)
+            {
+                result += phi;
+            }
+
+            return result;
+        }
+
+        private static int USCLN(int a, int b)
+        {
+            if (b == 0) return a;
+            return USCLN(b, a % b);
+        }
+
     }
 }

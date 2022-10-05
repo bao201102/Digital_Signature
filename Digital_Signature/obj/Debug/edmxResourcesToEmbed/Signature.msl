@@ -11,9 +11,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tbl_student">
-      <EntityTypeMapping TypeName="db_RSAModel.tbl_student">
-        <MappingFragment StoreEntitySet="tbl_student">
+    <EntitySetMapping Name="tbl_student_cipher">
+      <EntityTypeMapping TypeName="db_RSAModel.tbl_student_cipher">
+        <MappingFragment StoreEntitySet="tbl_student_cipher">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="religion" ColumnName="religion" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="place_of_birth" ColumnName="place_of_birth" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="graduation_year" ColumnName="graduation_year" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="stu_id" ColumnName="stu_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_student_plain">
+      <EntityTypeMapping TypeName="db_RSAModel.tbl_student_plain">
+        <MappingFragment StoreEntitySet="tbl_student_plain">
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="religion" ColumnName="religion" />
           <ScalarProperty Name="phone" ColumnName="phone" />

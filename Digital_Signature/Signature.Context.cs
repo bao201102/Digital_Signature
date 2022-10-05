@@ -26,7 +26,8 @@ namespace Digital_Signature
         }
     
         public DbSet<tbl_key> tbl_key { get; set; }
-        public DbSet<tbl_student> tbl_student { get; set; }
+        public DbSet<tbl_student_cipher> tbl_student_cipher { get; set; }
+        public DbSet<tbl_student_plain> tbl_student_plain { get; set; }
         public DbSet<tbl_user> tbl_user { get; set; }
         public DbSet<tbl_usertype> tbl_usertype { get; set; }
     }

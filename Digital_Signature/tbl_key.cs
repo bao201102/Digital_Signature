@@ -20,7 +20,7 @@ namespace Digital_Signature
         }
     
         public int sig_id { get; set; }
-        public int private_key { get; set; }
+        public string private_key { get; set; }
         public int public_key { get; set; }
         public int n { get; set; }
     
