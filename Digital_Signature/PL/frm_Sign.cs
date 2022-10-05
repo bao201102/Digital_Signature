@@ -18,6 +18,10 @@ namespace Digital_Signature
 {
     public partial class frm_Sign : Form
     {
+        int p = 0;
+        int q = 0;
+        int publicKey = 0;
+        int privateKey = 0;
         public frm_Sign()
         {
             InitializeComponent();
@@ -32,10 +36,10 @@ namespace Digital_Signature
         {
             if (true)
             {
-                Messbox messBox = new Messbox();
-                bool result = messBox.ShowMess();
-                if (result == true)
-                {
+                //Messbox messBox = new Messbox();
+                //bool result = messBox.ShowMess();
+                //if (result == true)
+                //{
                     string fullName = txtName.Text;
                     string gender = cbGender.Text;
                     string graYear = txtYear.Text;
@@ -45,6 +49,7 @@ namespace Digital_Signature
                     string ethic = cbReligion.Text;
                     //Valiate tham số nhập vào
                     string[] infoArr = { fullName, gender, graYear, email, birthPlace, phone, ethic };
+                    string[] resultSignArr = new string[infoArr.Length];
                     int count = 0;
                     for (int i = 0; i < infoArr.Length; i++)
                     {
@@ -59,27 +64,32 @@ namespace Digital_Signature
                         for (int i = 0; i < infoArr.Length; i++)
                         {
                             string hex = "";
-                            foreach (int item in infoArr[i])
+                            for(int j = 0; j < infoArr[i].Length; j++)
                             {
-                                hex += item + " ";
+                                if(j < infoArr[i].Length - 1)
+                                {
+                                    hex += (int)infoArr[i][j] + " ";
+                                }else if(j == infoArr[i].Length - 1)
+                                {
+                                    hex += (int)infoArr[i][j];
+                                }
                             }
                             infoHex[i] = hex;
-                        }
-                        //for(int i = 0; i < infoHex.Length; i++)
-                        //{
-                        //    MessageBox.Show(infoHex[i]);
-                        //}
+                            string resultSign = Sign(infoHex[i], p, q, privateKey);
+                            resultSignArr[i] = resultSign;
+                            bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
+                    }
                     }
                     else
                     {
                         bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                     }
                     //bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
-                }
-                else
-                {
-                    bunifuSnackbar1.Show(this, "Không tìm thấy khóa bí mật. Vui lòng thử lại", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-                }
+                //}
+                //else
+                //{
+                //    bunifuSnackbar1.Show(this, "Không tìm thấy khóa bí mật. Vui lòng thử lại", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                //}
 
             }
         }
@@ -97,8 +107,6 @@ namespace Digital_Signature
         private void btnCreateSig_Click(object sender, EventArgs e)
         {
             Random rd = new Random();
-            int p = 0;
-            int q = 0;
             //Sinh ngẫu nhiên p, q thuoc so nguyen to
             do
             {
@@ -113,8 +121,8 @@ namespace Digital_Signature
             if (p != q)
             {
                 //Sinh khóa bí mật và khóa công khai
-                int privateKey = createPrivateKey(p, q);
-                int publicKey = createPublicKey(p, q);
+                privateKey = createPrivateKey(p, q);
+                publicKey = createPublicKey(p, q);
 
                 MessageBox.Show($"q: {q}. Hãy ghi nhớ khóa này");
                 MessageBox.Show($"p: {p}. Hãy ghi nhớ khóa này");
@@ -215,6 +223,27 @@ namespace Digital_Signature
                 result += phi;
             }
 
+            return result;
+        }
+
+        public static string Sign(string s, int p, int q, int pri)
+        {
+            string[] M = s.Split(' ');
+            int n = q * p;
+            string result = "";
+            for (int i = 0; i < M.Length; i++)
+            {
+                int num = Convert.ToInt32(M[i]);
+                if (M[i] != M[M.Length - 1])
+                {
+                    result += (Math.Pow(num, pri) % n).ToString() + " ";
+                }
+                else
+                {
+                    result += (Math.Pow(num, pri) % n).ToString();
+                }
+                //MessageBox.Show(M[i]);
+            }
             return result;
         }
 
