@@ -21,7 +21,9 @@ namespace Digital_Signature
         int p = 0;
         int q = 0;
         int publicKey = 0;
+        string privateKeyMD5 = "";
         int privateKey = 0;
+        int n = 0;
         public frm_Sign()
         {
             InitializeComponent();
@@ -59,32 +61,32 @@ namespace Digital_Signature
                         }
                     }
                     string[] infoHex = new string[infoArr.Length];
-                    if (count == infoArr.Length)
+                if (count == infoArr.Length)
+                {
+                    for (int i = 0; i < infoArr.Length; i++)
                     {
-                        for (int i = 0; i < infoArr.Length; i++)
+                        string hex = "";
+                        for (int j = 0; j < infoArr[i].Length; j++)
                         {
-                            string hex = "";
-                            for(int j = 0; j < infoArr[i].Length; j++)
+                            if (j < infoArr[i].Length - 1)
                             {
-                                if(j < infoArr[i].Length - 1)
-                                {
-                                    hex += (int)infoArr[i][j] + " ";
-                                }else if(j == infoArr[i].Length - 1)
-                                {
-                                    hex += (int)infoArr[i][j];
-                                }
+                                hex += (int)infoArr[i][j] + " ";
                             }
-                            infoHex[i] = hex;
-                            string resultSign = Sign(infoHex[i], p, q, privateKey);
-                            resultSignArr[i] = resultSign;
-                            bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
+                            else if (j == infoArr[i].Length - 1)
+                            {
+                                hex += (int)infoArr[i][j];
+                            }
+                        }
+                        infoHex[i] = hex;
+                        string resultSign = Sign(infoHex[i], p, q, privateKey);
+                        resultSignArr[i] = resultSign;
+                        bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
                     }
-                    }
-                    else
-                    {
-                        bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-                    }
-                    //bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
+                }
+                else
+                {
+                    bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                }
                 //}
                 //else
                 //{
@@ -123,12 +125,23 @@ namespace Digital_Signature
                 //Sinh khóa bí mật và khóa công khai
                 privateKey = createPrivateKey(p, q);
                 publicKey = createPublicKey(p, q);
-
+                privateKeyMD5 = EncryptMd5(privateKey.ToString());
                 MessageBox.Show($"q: {q}. Hãy ghi nhớ khóa này");
                 MessageBox.Show($"p: {p}. Hãy ghi nhớ khóa này");
                 MessageBox.Show($"Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này");
-                bunifuSnackbar1.Show(this, $"Tạo chữ ký thành công. Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-                MessageBox.Show($"Khóa công khai: {publicKey}");
+                List<object> listKey = KeyBLL.getAllKey();
+                int id = listKey.Count + 1;
+                int n = p * q;
+                KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n);
+                bool result = KeyBLL.addNewKey(newKey);
+                if(result == true)
+                {
+                    bunifuSnackbar1.Show(this, $"Tạo chữ ký thành công. Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                    MessageBox.Show($"Khóa công khai: {publicKey}");
+                }else
+                {
+                    bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                }
             }
         }
 
@@ -242,7 +255,6 @@ namespace Digital_Signature
                 {
                     result += (Math.Pow(num, pri) % n).ToString();
                 }
-                //MessageBox.Show(M[i]);
             }
             return result;
         }
@@ -252,6 +264,8 @@ namespace Digital_Signature
             if (b == 0) return a;
             return USCLN(b, a % b);
         }
+
+        
 
     }
 }
