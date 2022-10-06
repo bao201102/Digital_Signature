@@ -129,8 +129,6 @@ namespace Digital_Signature
                 privateKey = createPrivateKey(p, q);
                 publicKey = createPublicKey(p, q);
                 privateKeyMD5 = EncryptMd5(privateKey.ToString());
-                MessageBox.Show($"q: {q}. Hãy ghi nhớ khóa này");
-                MessageBox.Show($"p: {p}. Hãy ghi nhớ khóa này");
                 MessageBox.Show($"Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này");
                 List<object> listKey = KeyBLL.getAllKey();
                 int id = listKey.Count + 1;
@@ -247,7 +245,7 @@ namespace Digital_Signature
             return result;
         }
 
-        public static string Sign(string s, int p, int q, int pri)
+        private static string Sign(string s, int p, int q, int pri)
         {
             string[] M = s.Split(' ');
             int n = q * p;
@@ -272,8 +270,5 @@ namespace Digital_Signature
             if (b == 0) return a;
             return USCLN(b, a % b);
         }
-
-        
-
     }
 }
