@@ -44,6 +44,7 @@ namespace Digital_Signature
                 {
                     string fullName = txtName.Text;
                     string gender = cbGender.Text;
+                    DateTime birth = dateBirth.Value;
                     string graYear = txtYear.Text;
                     string email = txtEmail.Text;
                     string birthPlace = txtBorn.Text;
@@ -62,34 +63,44 @@ namespace Digital_Signature
                         }
                     }
                     string[] infoHex = new string[infoArr.Length];
-                if (count == infoArr.Length)
-                {
-                    for (int i = 0; i < infoArr.Length; i++)
+                    if (count == infoArr.Length)
                     {
-                        string hex = "";
-                        for (int j = 0; j < infoArr[i].Length; j++)
+                        for (int i = 0; i < infoArr.Length; i++)
                         {
-                            if (j < infoArr[i].Length - 1)
+                            string hex = "";
+                            for (int j = 0; j < infoArr[i].Length; j++)
                             {
-                                hex += (int)infoArr[i][j] + " ";
+                                if (j < infoArr[i].Length - 1)
+                                {
+                                    hex += (int)infoArr[i][j] + " ";
+                                }
+                                else if (j == infoArr[i].Length - 1)
+                                {
+                                    hex += (int)infoArr[i][j];
+                                }
                             }
-                            else if (j == infoArr[i].Length - 1)
-                            {
-                                hex += (int)infoArr[i][j];
-                            }
+                            infoHex[i] = hex;
+                            string resultSign = Sign(infoHex[i], p, q, privateKey);
+                            resultSignArr[i] = resultSign;
+                            
                         }
-                        infoHex[i] = hex;
-                        string resultSign = Sign(infoHex[i], p, q, privateKey);
-                        resultSignArr[i] = resultSign;
+                        List<object> listStudentCipher = StudentCipherBLL.getAllStudent();
+                        int id = listStudentCipher.Count + 1;
+                        StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], 1);
+                        bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
+                        if(result == true)
+                        {
+                            bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
+                        }else
+                        {
+                            bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                        }
+                        
                     }
-                    StudentCipherDTO studentCipher = new StudentCipherDTO();
-                    studentCipher.stu_id = 
-                    bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
-                }
-                else
-                {
-                    bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-                }
+                    else
+                    {
+                        bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                    }
                 }
                 else
                 {
