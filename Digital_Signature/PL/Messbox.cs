@@ -34,6 +34,7 @@ namespace Digital_Signature.PL
             string privateKey = txtPrivateKey.Text;
             string privateKeyMD5 = EncryptMd5(privateKey);
             List<object> listKey = KeyBLL.getAllKey();
+            int count = 0;
             for(int i = 0; i < listKey.Count; i++)
             {
                 KeyDTO key = (KeyDTO)listKey[i];
@@ -44,8 +45,12 @@ namespace Digital_Signature.PL
                     break;
                 }else
                 {
-                    result = false;
+                    count++;
                 }
+            }
+            if(count == listKey.Count)
+            {
+                result = false;
             }
         }
 

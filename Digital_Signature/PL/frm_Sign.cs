@@ -27,6 +27,7 @@ namespace Digital_Signature
         public frm_Sign()
         {
             InitializeComponent();
+            
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
@@ -38,6 +39,7 @@ namespace Digital_Signature
         {
             if (true)
             {
+                
                 Messbox messBox = new Messbox();
                 bool result = messBox.ShowMess();
                 if (result == true)
@@ -52,7 +54,7 @@ namespace Digital_Signature
                     string ethic = cbReligion.Text;
                     //Valiate tham số nhập vào
                     string[] infoArr = { fullName, gender, graYear, email, birthPlace, phone, ethic };
-                    string[] infoArr1 = infoArr;
+                    //string[] infoArr1 = infoArr;
                     string[] resultSignArr = new string[infoArr.Length];
                     int count = 0;
                     for (int i = 0; i < infoArr.Length; i++)
@@ -88,7 +90,7 @@ namespace Digital_Signature
                         int id = listStudentCipher.Count + 1;
                         StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], 1);
                         bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
-                        if(result == true)
+                        if(resultAdd == true)
                         {
                             bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
                         }else
@@ -149,13 +151,18 @@ namespace Digital_Signature
                 MessageBox.Show(privateKeyMD5);
                 MessageBox.Show(publicKey.ToString());
                 MessageBox.Show(n.ToString());
-;               bool resultAdd = KeyBLL.addNewKey(newKey);
-                if(resultAdd == true)
+                ; bool resultAdd = KeyBLL.addNewKey(newKey);
+                if (resultAdd == true)
                 {
                     MessageBox.Show("Thêm thành công");
+                    for(int i = 0; i < listKey.Count; i++)
+                    {
+                        MessageBox.Show(listKey[i].ToString());
+                    }
                     bunifuSnackbar1.Show(this, $"Tạo chữ ký thành công. Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                     MessageBox.Show($"Khóa công khai: {publicKey}");
-                }else
+                }
+                else
                 {
                     bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 }
