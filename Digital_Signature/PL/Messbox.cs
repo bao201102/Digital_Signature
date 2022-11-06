@@ -33,7 +33,7 @@ namespace Digital_Signature.PL
         {
             string privateKey = txtPrivateKey.Text;
             string privateKeyMD5 = EncryptMd5(privateKey);
-            List<object> listKey = KeyBLL.getAllKey();
+            List<KeyDTO> listKey = KeyBLL.getAllKey();
             int count = 0;
             for(int i = 0; i < listKey.Count; i++)
             {
