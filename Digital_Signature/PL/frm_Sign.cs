@@ -27,7 +27,7 @@ namespace Digital_Signature
         public frm_Sign()
         {
             InitializeComponent();
-            
+            btnSign.Enabled = false;
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
@@ -87,9 +87,6 @@ namespace Digital_Signature
                             
                             
                         }
-
-                        MessageBox.Show(p.ToString());
-                        MessageBox.Show(q.ToString());
                         for(int i = 0; i < infoHex.Length; i++)
                         {
                             string resultSign = Sign(infoHex[i], p, q, privateKey);
@@ -102,17 +99,18 @@ namespace Digital_Signature
                         }
 
                         List<object> listStudentCipher = StudentCipherBLL.getAllStudent();
-                        //int id = listStudentCipher.Count + 1;
-                        //StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], 1);
-                        //bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
-                        //if(resultAdd == true)
-                        //{
-                        //    bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
-                        //}else
-                        //{
-                        //    bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-                        //}
-                        
+                        int id = listStudentCipher.Count + 1;
+                        StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], 1);
+                        bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
+                        if (resultAdd == true)
+                        {
+                            bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
+                        }
+                        else
+                        {
+                            bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                        }
+
                     }
                     else
                     {
@@ -139,6 +137,7 @@ namespace Digital_Signature
 
         private void btnCreateSig_Click(object sender, EventArgs e)
         {
+            btnSign.Enabled = true;
             Random rd = new Random();
             //Sinh ngẫu nhiên p, q thuoc so nguyen to
             do
@@ -162,10 +161,6 @@ namespace Digital_Signature
                 int id = listKey.Count + 1;
                 int n = p * q;
                 KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n);
-                MessageBox.Show(id.ToString());
-                MessageBox.Show(privateKeyMD5);
-                MessageBox.Show(publicKey.ToString());
-                MessageBox.Show(n.ToString());
                 bool resultAdd = KeyBLL.addNewKey(newKey);
                 if (resultAdd == true)
                 {
@@ -282,7 +277,6 @@ namespace Digital_Signature
         {
             string[] M = s.Split(' ');
             int n = q * p;
-
             string result = "";
             for (int i = 0; i < M.Length; i++)
             {

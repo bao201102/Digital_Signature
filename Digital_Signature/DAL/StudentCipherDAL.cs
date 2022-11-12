@@ -14,7 +14,7 @@ namespace Digital_Signature.DAL
         public static bool addNewStudent(StudentCipherDTO studentCipher)
         {
             db_RSAEntities db_RSAEntities = new db_RSAEntities();
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<KeyDTO, tbl_student_cipher>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<StudentCipherDTO, tbl_student_cipher>());
             var mapper = new Mapper(config);
             tbl_student_cipher student = mapper.Map<tbl_student_cipher>(studentCipher);
             db_RSAEntities.tbl_student_cipher.Add(student);
