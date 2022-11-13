@@ -91,10 +91,12 @@ namespace Digital_Signature
                                 }
                             }
                             infoHex[i] = hex;
-                            
-                            
                         }
-                        for(int i = 0; i < infoHex.Length; i++)
+                        for (int i = 0; i < infoHex.Length; i++)
+                        {
+                            MessageBox.Show("Văn bản trước khi kí: " + infoHex[i]);
+                        }
+                        for (int i = 0; i < infoHex.Length; i++)
                         {
                             string resultSign = Sign(infoHex[i], p, q, privateKey);
                             resultSignArr[i] = resultSign;
@@ -167,6 +169,8 @@ namespace Digital_Signature
 
             if (p != q)
             {
+                MessageBox.Show($"p: {p}");
+                MessageBox.Show($"q: {q}");
                 //Sinh khóa bí mật và khóa công khai
                 privateKey = createPrivateKey(p, q);
                 publicKey = createPublicKey(p, q);
@@ -254,7 +258,7 @@ namespace Digital_Signature
         {
             // r = pri * x + phi * y
             int phi = (p - 1) * (q - 1);
-            int pri = createPrivateKey(p, q);
+            int pri = Convert.ToInt32(createPrivateKey(p, q));
             List<double> ri = new List<double>() { phi, pri };
             List<double> qi = new List<double>() { 0, 0 };
             List<double> yi = new List<double>() { 1, 0 };
@@ -280,10 +284,10 @@ namespace Digital_Signature
 
             int result = (int)xi[xi.Count - 1];
 
-            if (result < 0)
-            {
-                result += phi;
-            }
+            //if (result < 0)
+            //{
+            //    result += phi;
+            //}
 
             return result;
         }
