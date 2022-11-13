@@ -159,12 +159,12 @@ namespace Digital_Signature
             //Sinh ngẫu nhiên p, q thuoc so nguyen to
             do
             {
-                p = rd.Next(0, 99);
+                p = rd.Next(0, 20);
             } while (!CheckPrimeNum(p));
 
             do
             {
-                q = rd.Next(0, 99);
+                q = rd.Next(0, 20);
             } while (!CheckPrimeNum(q) || q == p);
 
             if (p != q)
