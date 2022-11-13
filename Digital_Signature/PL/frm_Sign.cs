@@ -28,6 +28,14 @@ namespace Digital_Signature
         {
             InitializeComponent();
             btnSign.Enabled = false;
+            txtName.Enabled = false;
+            cbGender.Enabled = false;
+            dateBirth.Enabled = false;
+            txtYear.Enabled = false;
+            txtEmail.Enabled = false;
+            txtBorn.Enabled = false;
+            txtPhone.Enabled = false;
+            cbReligion.Enabled = false;
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
@@ -39,7 +47,6 @@ namespace Digital_Signature
         {
             if (true)
             {
-                
                 Messbox messBox = new Messbox();
                 bool result = messBox.ShowMess();
                 if (result == true)
@@ -138,6 +145,14 @@ namespace Digital_Signature
         private void btnCreateSig_Click(object sender, EventArgs e)
         {
             btnSign.Enabled = true;
+            txtName.Enabled = true;
+            cbGender.Enabled = true;
+            dateBirth.Enabled = true;
+            txtYear.Enabled = true;
+            txtEmail.Enabled = true;
+            txtBorn.Enabled = true;
+            txtPhone.Enabled = true;
+            cbReligion.Enabled = true;
             Random rd = new Random();
             //Sinh ngẫu nhiên p, q thuoc so nguyen to
             do
