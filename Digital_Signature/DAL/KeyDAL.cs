@@ -22,25 +22,21 @@ namespace Digital_Signature.DAL
             return db_RSAEntities.SaveChanges() > 0 ? true : false;
         }
         //Lấy ra tất cả khóa trong CSDL
-        public static List<object> getAllKey()
+        public static List<KeyDTO> getAllKey()
         {
             db_RSAEntities db_RSAEntities = new db_RSAEntities();
-            List<object> list = new List<object>();
-
+            List<KeyDTO> listKey = new List<KeyDTO>();
             var query = from qkey in db_RSAEntities.tbl_key
-                        select new
-                        {
-                            qkey.sig_id,
-                            qkey.private_key,
-                            qkey.public_key,
-                            qkey.n
-                        };
-
-            foreach (var item in query)
+                        select qkey;
+                        
+            foreach (tbl_key item in query)
             {
-                list.Add(item);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<tbl_key, KeyDTO>());
+                var mapper = new Mapper(config);
+                KeyDTO key = mapper.Map<KeyDTO>(item);
+                listKey.Add(key);
             }
-            return list;
+            return listKey;
         }
         //Lấy khóa theo sig_id từ CSDL
         public static List<KeyDTO> getKeyById(int sid)

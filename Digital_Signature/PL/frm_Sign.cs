@@ -27,6 +27,15 @@ namespace Digital_Signature
         public frm_Sign()
         {
             InitializeComponent();
+            btnSign.Enabled = false;
+            txtName.Enabled = false;
+            cbGender.Enabled = false;
+            dateBirth.Enabled = false;
+            txtYear.Enabled = false;
+            txtEmail.Enabled = false;
+            txtBorn.Enabled = false;
+            txtPhone.Enabled = false;
+            cbReligion.Enabled = false;
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
@@ -52,9 +61,10 @@ namespace Digital_Signature
                     string ethic = cbReligion.Text;
                     //Valiate tham số nhập vào
                     string[] infoArr = { fullName, gender, graYear, email, birthPlace, phone, ethic };
-                    string[] infoArr1 = infoArr;
+                    //string[] infoArr1 = infoArr;
                     string[] resultSignArr = new string[infoArr.Length];
                     int count = 0;
+                    //Validate thông tin nhập vào
                     for (int i = 0; i < infoArr.Length; i++)
                     {
                         if (infoArr[i] != "")
@@ -62,6 +72,7 @@ namespace Digital_Signature
                             count++;
                         }
                     }
+                    
                     string[] infoHex = new string[infoArr.Length];
                     if (count == infoArr.Length)
                     {
@@ -80,22 +91,35 @@ namespace Digital_Signature
                                 }
                             }
                             infoHex[i] = hex;
+                        }
+                        for (int i = 0; i < infoHex.Length; i++)
+                        {
+                            MessageBox.Show("Văn bản trước khi kí: " + infoHex[i]);
+                        }
+                        for (int i = 0; i < infoHex.Length; i++)
+                        {
                             string resultSign = Sign(infoHex[i], p, q, privateKey);
                             resultSignArr[i] = resultSign;
-                            
                         }
+
+                        for (int i = 0; i < resultSignArr.Length; i++)
+                        {
+                            MessageBox.Show("Kết quả kí: " + resultSignArr[i].ToString());
+                        }
+
                         List<object> listStudentCipher = StudentCipherBLL.getAllStudent();
                         int id = listStudentCipher.Count + 1;
                         StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], 1);
                         bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
-                        if(result == true)
+                        if (resultAdd == true)
                         {
                             bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
-                        }else
+                        }
+                        else
                         {
                             bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                         }
-                        
+
                     }
                     else
                     {
@@ -122,40 +146,52 @@ namespace Digital_Signature
 
         private void btnCreateSig_Click(object sender, EventArgs e)
         {
+            btnSign.Enabled = true;
+            txtName.Enabled = true;
+            cbGender.Enabled = true;
+            dateBirth.Enabled = true;
+            txtYear.Enabled = true;
+            txtEmail.Enabled = true;
+            txtBorn.Enabled = true;
+            txtPhone.Enabled = true;
+            cbReligion.Enabled = true;
             Random rd = new Random();
             //Sinh ngẫu nhiên p, q thuoc so nguyen to
             do
             {
-                p = rd.Next(0, 99);
+                p = rd.Next(0, 20);
             } while (!CheckPrimeNum(p));
 
             do
             {
-                q = rd.Next(0, 99);
+                q = rd.Next(0, 20);
             } while (!CheckPrimeNum(q) || q == p);
 
             if (p != q)
             {
+                MessageBox.Show($"p: {p}");
+                MessageBox.Show($"q: {q}");
                 //Sinh khóa bí mật và khóa công khai
                 privateKey = createPrivateKey(p, q);
                 publicKey = createPublicKey(p, q);
                 privateKeyMD5 = EncryptMd5(privateKey.ToString());
                 MessageBox.Show($"Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này");
-                List<object> listKey = KeyBLL.getAllKey();
+                List<KeyDTO> listKey = KeyBLL.getAllKey();
                 int id = listKey.Count + 1;
                 int n = p * q;
                 KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n);
-                MessageBox.Show(id.ToString());
-                MessageBox.Show(privateKeyMD5);
-                MessageBox.Show(publicKey.ToString());
-                MessageBox.Show(n.ToString());
-;               bool resultAdd = KeyBLL.addNewKey(newKey);
-                if(resultAdd == true)
+                bool resultAdd = KeyBLL.addNewKey(newKey);
+                if (resultAdd == true)
                 {
                     MessageBox.Show("Thêm thành công");
+                    for(int i = 0; i < listKey.Count; i++)
+                    {
+                        MessageBox.Show(listKey[i].ToString());
+                    }
                     bunifuSnackbar1.Show(this, $"Tạo chữ ký thành công. Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                     MessageBox.Show($"Khóa công khai: {publicKey}");
-                }else
+                }
+                else
                 {
                     bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 }
@@ -222,7 +258,7 @@ namespace Digital_Signature
         {
             // r = pri * x + phi * y
             int phi = (p - 1) * (q - 1);
-            int pri = createPrivateKey(p, q);
+            int pri = Convert.ToInt32(createPrivateKey(p, q));
             List<double> ri = new List<double>() { phi, pri };
             List<double> qi = new List<double>() { 0, 0 };
             List<double> yi = new List<double>() { 1, 0 };
@@ -248,10 +284,10 @@ namespace Digital_Signature
 
             int result = (int)xi[xi.Count - 1];
 
-            if (result < 0)
-            {
-                result += phi;
-            }
+            //if (result < 0)
+            //{
+            //    result += phi;
+            //}
 
             return result;
         }

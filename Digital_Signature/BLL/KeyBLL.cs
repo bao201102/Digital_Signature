@@ -27,7 +27,7 @@ namespace Digital_Signature.BLL
             return KeyDAL.addNewKey(nkey);
         }
 
-        public static List<object> getAllKey()
+        public static List<KeyDTO> getAllKey()
         {
             return KeyDAL.getAllKey();
         }
