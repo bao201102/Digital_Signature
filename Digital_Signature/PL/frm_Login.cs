@@ -58,7 +58,7 @@ namespace Digital_Signature
                     UserTypeDTO userType = UserTypeBLL.GetUserTypeDTO(user.user_type_id);
                     if (userType.type == "Student")
                     {
-                        frm_Sign form = new frm_Sign();
+                        frm_Sign form = new frm_Sign(user.user_id);
                         this.Hide();
                         form.ShowDialog();
                         this.Close();

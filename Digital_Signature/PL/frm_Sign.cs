@@ -24,7 +24,8 @@ namespace Digital_Signature
         string privateKeyMD5 = "";
         int privateKey = 0;
         int n = 0;
-        public frm_Sign()
+        int user_id = 0;
+        public frm_Sign(int id)
         {
             InitializeComponent();
             //btnSign.Enabled = false;
@@ -36,6 +37,7 @@ namespace Digital_Signature
             //txtBorn.Enabled = false;
             //txtPhone.Enabled = false;
             //cbReligion.Enabled = false;
+            user_id = id;
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
@@ -109,7 +111,7 @@ namespace Digital_Signature
 
                         List<object> listStudentCipher = StudentCipherBLL.getAllStudent();
                         int id = listStudentCipher.Count + 1;
-                        StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], 1);
+                        StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], user_id, 0);
                         bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
                         if (resultAdd == true)
                         {
