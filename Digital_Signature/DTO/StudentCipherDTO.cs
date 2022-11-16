@@ -78,8 +78,15 @@ namespace Digital_Signature.DTO
             set { _user_id = value; }
         }
 
+        private int _status;
+        public int status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
 
-        public StudentCipherDTO(int stu_id_, string name_, string sex_, DateTime birthday_, string graduation_year_, string email_, string place_of_birth_, string phone_, string religion_, int user_id_)
+
+        public StudentCipherDTO(int stu_id_, string name_, string sex_, DateTime birthday_, string graduation_year_, string email_, string place_of_birth_, string phone_, string religion_, int user_id_, int status_)
         {
             this.stu_id = stu_id_;
             this.name = name_;
@@ -91,6 +98,7 @@ namespace Digital_Signature.DTO
             this.phone = phone_;
             this.religion = religion_;
             this.user_id = user_id_;
+            this.status = status_;
         }
 
         public StudentCipherDTO()
@@ -105,6 +113,7 @@ namespace Digital_Signature.DTO
             this.phone = "";
             this.religion = "";
             this.user_id = 0;
+            this.status = 0;
         }
     }
 }
