@@ -27,15 +27,15 @@ namespace Digital_Signature
         public frm_Sign()
         {
             InitializeComponent();
-            btnSign.Enabled = false;
-            txtName.Enabled = false;
-            cbGender.Enabled = false;
-            dateBirth.Enabled = false;
-            txtYear.Enabled = false;
-            txtEmail.Enabled = false;
-            txtBorn.Enabled = false;
-            txtPhone.Enabled = false;
-            cbReligion.Enabled = false;
+            //btnSign.Enabled = false;
+            //txtName.Enabled = false;
+            //cbGender.Enabled = false;
+            //dateBirth.Enabled = false;
+            //txtYear.Enabled = false;
+            //txtEmail.Enabled = false;
+            //txtBorn.Enabled = false;
+            //txtPhone.Enabled = false;
+            //cbReligion.Enabled = false;
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
@@ -159,12 +159,12 @@ namespace Digital_Signature
             //Sinh ngẫu nhiên p, q thuoc so nguyen to
             do
             {
-                p = rd.Next(0, 20);
+                p = rd.Next(0, 99);
             } while (!CheckPrimeNum(p));
 
             do
             {
-                q = rd.Next(0, 20);
+                q = rd.Next(0, 99);
             } while (!CheckPrimeNum(q) || q == p);
 
             if (p != q)
@@ -302,11 +302,11 @@ namespace Digital_Signature
                 int num = Convert.ToInt32(M[i]);
                 if (M[i] != M[M.Length - 1])
                 {
-                    result += (Math.Pow(num, pri) % n).ToString() + " ";
+                    result += (power(Convert.ToInt32(M[i]), pri, n).ToString() + " ");
                 }
                 else
                 {
-                    result += (Math.Pow(num, pri) % n).ToString();
+                    result += (power(Convert.ToInt32(M[i]), pri, n));
                 }
             }
             return result;
@@ -316,6 +316,25 @@ namespace Digital_Signature
         {
             if (b == 0) return a;
             return USCLN(b, a % b);
+        }
+
+        private static double power(int a, int b, int mod)
+        {
+            int result = 1;
+            while (b > 0)
+            {
+                if ((b & 1) != 0)
+                {
+                    a = a % mod;
+                    result = (result * a) % mod;
+                    result = result % mod;
+                }
+                b = b >> 1;
+                a = a % mod;
+                a = (a * a) % mod;
+                a = a % mod;
+            }
+            return result;
         }
     }
 }
