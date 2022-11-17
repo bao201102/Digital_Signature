@@ -24,7 +24,7 @@ namespace Digital_Signature
         string privateKeyMD5 = "";
         int privateKey = 0;
         int n = 0;
-        int user_id = 0;
+        int user_id;
         public frm_Sign(int id)
         {
             InitializeComponent();
@@ -181,9 +181,13 @@ namespace Digital_Signature
                 List<KeyDTO> listKey = KeyBLL.getAllKey();
                 int id = listKey.Count + 1;
                 int n = p * q;
-                KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n);
+                KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n, user_id);
                 bool resultAdd = KeyBLL.addNewKey(newKey);
-                if (resultAdd == true)
+                List<KeyDTO> listKeyUser = KeyBLL.getKeyUser(user_id);
+                KeyDTO keyUser = listKeyUser[0];
+                bool resultAddSignUser = UserBLL.AddSignUser(keyUser.user_id, id);
+                
+                if (resultAdd == true && resultAddSignUser == true)
                 {
                     MessageBox.Show("Thêm thành công");
                     for(int i = 0; i < listKey.Count; i++)

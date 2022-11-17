@@ -30,5 +30,22 @@ namespace Digital_Signature.DAL
                 return null;
             }
         }
+
+        public static bool AddSignUser(int userId, int signId)
+        {
+            db_RSAEntities db_RSAEntities = new db_RSAEntities();
+            tbl_user user = db_RSAEntities.tbl_user.Where(x => x.user_id.Equals(userId)).Single();
+            user.sig_id = signId;
+            try
+            {
+                db_RSAEntities.SaveChanges();
+                return true;
+            }
+            catch(Exception e)
+            {
+                db_RSAEntities.SaveChanges();
+                return false;
+            }
+        }
     }
 }

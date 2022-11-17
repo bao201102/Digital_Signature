@@ -14,5 +14,9 @@ namespace Digital_Signature.BLL
         {
             return UserDAL.GetUser(username, password);
         }
+        public static bool AddSignUser(int userId, int signId)
+        {
+            return UserDAL.AddSignUser(userId, signId);
+        }
     }
 }

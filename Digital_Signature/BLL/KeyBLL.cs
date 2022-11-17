@@ -36,5 +36,11 @@ namespace Digital_Signature.BLL
         {
             return KeyDAL.getKeyById(sid);
         }
+
+        //Lấy ra khóa mà người dùng đã tạo
+        public static List<KeyDTO> getKeyUser(int userId)
+        {
+            return KeyDAL.getKeyUser(userId);
+        }
     }
 }
