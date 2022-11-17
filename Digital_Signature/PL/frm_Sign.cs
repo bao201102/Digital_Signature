@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.ServiceModel.Configuration;
+using System.Speech.Recognition;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,6 +26,11 @@ namespace Digital_Signature
         int privateKey = 0;
         int n = 0;
         int user_id;
+        KeyDTO keyUserCreated = new KeyDTO();
+        List<StudentCipherDTO> listStudentSigned = new List<StudentCipherDTO>();
+        List<StudentPlainDTO> listStudentPlainSigned = new List<StudentPlainDTO>();
+        List<KeyDTO> listKeyUserCreated = new List<KeyDTO>();
+        
         public frm_Sign(int id)
         {
             InitializeComponent();
@@ -38,101 +44,145 @@ namespace Digital_Signature
             //txtPhone.Enabled = false;
             //cbReligion.Enabled = false;
             user_id = id;
+            listStudentSigned = StudentCipherBLL.getStudentsSigned(id);
+            listStudentPlainSigned = StudentPlainBLL.getStudentsSigned(id);
+            listKeyUserCreated = KeyBLL.getKeyUser(id);
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
         {
-
+            if (listStudentSigned.Count > 0)
+            {
+                btnCreateSig.Enabled = false;
+                btnSign.Enabled = false;
+                gridviewConfirm.DataSource = listStudentPlainSigned;
+                gridviewConfirm.Columns[0].Visible = false;
+                gridviewConfirm.Columns[1].HeaderText = "Họ và tên";
+                gridviewConfirm.Columns[2].HeaderText = "Giới tính";
+                gridviewConfirm.Columns[3].HeaderText = "Ngày sinh";
+                gridviewConfirm.Columns[4].HeaderText = "Năm tốt nghiệp";
+                gridviewConfirm.Columns[5].HeaderText = "Email";
+                gridviewConfirm.Columns[6].HeaderText = "Nơi sinh";
+                gridviewConfirm.Columns[7].HeaderText = "SDT";
+                gridviewConfirm.Columns[8].HeaderText = "Dân tộc";
+                gridviewConfirm.Columns[9].Visible = false;
+                gridviewConfirm.Columns[10].Visible = false;
+                txtName.Text = listStudentPlainSigned[0].name;
+                cbGender.Text = listStudentPlainSigned[0].sex;
+                dateBirth.Value = listStudentPlainSigned[0].birthday;
+                txtYear.Text = listStudentPlainSigned[0].graduation_year;
+                txtEmail.Text = listStudentPlainSigned[0].email;
+                txtBorn.Text = listStudentPlainSigned[0].place_of_birth;
+                txtPhone.Text = listStudentPlainSigned[0].phone;
+                cbReligion.Text = listStudentPlainSigned[0].religion;
+                txtName.Enabled = false;
+                cbGender.Enabled = false;
+                dateBirth.Enabled = false;
+                txtYear.Enabled = false;
+                txtEmail.Enabled = false;
+                txtBorn.Enabled = false;
+                txtPhone.Enabled = false;
+                cbReligion.Enabled = false;
+            }
+            
         }
 
         private void btnSign_Click(object sender, EventArgs e)
         {
-            if (true)
+            if(listKeyUserCreated.Count == 0)
             {
-                Messbox messBox = new Messbox();
-                bool result = messBox.ShowMess();
-                if (result == true)
+               bunifuSnackbar1.Show(this, "Vui lòng tạo khóa trước khi kí!", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+            }else if(listKeyUserCreated.Count > 0)
+            {
+                if (true)
                 {
-                    string fullName = txtName.Text;
-                    string gender = cbGender.Text;
-                    DateTime birth = dateBirth.Value;
-                    string graYear = txtYear.Text;
-                    string email = txtEmail.Text;
-                    string birthPlace = txtBorn.Text;
-                    string phone = txtPhone.Text;
-                    string ethic = cbReligion.Text;
-                    //Valiate tham số nhập vào
-                    string[] infoArr = { fullName, gender, graYear, email, birthPlace, phone, ethic };
-                    //string[] infoArr1 = infoArr;
-                    string[] resultSignArr = new string[infoArr.Length];
-                    int count = 0;
-                    //Validate thông tin nhập vào
-                    for (int i = 0; i < infoArr.Length; i++)
+                    Messbox messBox = new Messbox();
+                    bool result = messBox.ShowMess();
+                    if (result == true)
                     {
-                        if (infoArr[i] != "")
-                        {
-                            count++;
-                        }
-                    }
-                    
-                    string[] infoHex = new string[infoArr.Length];
-                    if (count == infoArr.Length)
-                    {
+                        string fullName = txtName.Text;
+                        string gender = cbGender.Text;
+                        DateTime birth = dateBirth.Value;
+                        string graYear = txtYear.Text;
+                        string email = txtEmail.Text;
+                        string birthPlace = txtBorn.Text;
+                        string phone = txtPhone.Text;
+                        string ethic = cbReligion.Text;
+                        string[] infoArr = { fullName, gender, birth.ToString(), graYear, email, birthPlace, phone, ethic };
+                        //Valiate tham số nhập vào
+
+                        //string[] infoArr1 = infoArr;
+                        string[] resultSignArr = new string[infoArr.Length];
+                        int count = 0;
+                        //Validate thông tin nhập vào
                         for (int i = 0; i < infoArr.Length; i++)
                         {
-                            string hex = "";
-                            for (int j = 0; j < infoArr[i].Length; j++)
+                            if (infoArr[i] != "")
                             {
-                                if (j < infoArr[i].Length - 1)
-                                {
-                                    hex += (int)infoArr[i][j] + " ";
-                                }
-                                else if (j == infoArr[i].Length - 1)
-                                {
-                                    hex += (int)infoArr[i][j];
-                                }
+                                count++;
                             }
-                            infoHex[i] = hex;
-                        }
-                        for (int i = 0; i < infoHex.Length; i++)
-                        {
-                            MessageBox.Show("Văn bản trước khi kí: " + infoHex[i]);
-                        }
-                        for (int i = 0; i < infoHex.Length; i++)
-                        {
-                            string resultSign = Sign(infoHex[i], p, q, privateKey);
-                            resultSignArr[i] = resultSign;
                         }
 
-                        for (int i = 0; i < resultSignArr.Length; i++)
+                        string[] infoHex = new string[infoArr.Length];
+                        if (count == infoArr.Length)
                         {
-                            MessageBox.Show("Kết quả kí: " + resultSignArr[i].ToString());
-                        }
+                            for (int i = 0; i < infoArr.Length; i++)
+                            {
+                                string hex = "";
+                                for (int j = 0; j < infoArr[i].Length; j++)
+                                {
+                                    if (j < infoArr[i].Length - 1)
+                                    {
+                                        hex += (int)infoArr[i][j] + " ";
+                                    }
+                                    else if (j == infoArr[i].Length - 1)
+                                    {
+                                        hex += (int)infoArr[i][j];
+                                    }
+                                }
+                                infoHex[i] = hex;
+                            }
+                            for (int i = 0; i < infoHex.Length; i++)
+                            {
+                                MessageBox.Show("Văn bản trước khi kí: " + infoHex[i]);
+                            }
+                            for (int i = 0; i < infoHex.Length; i++)
+                            {
+                                string resultSign = Sign(infoHex[i], p, q, privateKey);
+                                resultSignArr[i] = resultSign;
+                            }
 
-                        List<object> listStudentCipher = StudentCipherBLL.getAllStudent();
-                        int id = listStudentCipher.Count + 1;
-                        StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], user_id, 0);
-                        bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
-                        if (resultAdd == true)
-                        {
-                            bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
+                            for (int i = 0; i < resultSignArr.Length; i++)
+                            {
+                                MessageBox.Show("Kết quả kí: " + resultSignArr[i].ToString());
+                            }
+
+                            List<object> listStudentCipher = StudentCipherBLL.getAllStudent();
+                            int id = listStudentCipher.Count + 1;
+                            StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], user_id, 0);
+                            StudentPlainDTO studentPlain = new StudentPlainDTO(id, infoArr[0], infoArr[1], birth, infoArr[2], infoArr[3], infoArr[4], infoArr[5], infoArr[6], user_id, 0);
+                            bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
+                            bool resultAddPlain = StudentPlainBLL.addNewStudent(studentPlain);
+                            if (resultAdd == true && resultAddPlain == true)
+                            {
+                                bunifuSnackbar1.Show(this, "Bạn đã ký văn bản thành công", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Success);
+                            }
+                            else
+                            {
+                                bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                            }
+
                         }
                         else
                         {
-                            bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                            bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                         }
-
                     }
                     else
                     {
-                        bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                        bunifuSnackbar1.Show(this, "Không tìm thấy khóa bí mật. Vui lòng thử lại", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                     }
                 }
-                else
-                {
-                    bunifuSnackbar1.Show(this, "Không tìm thấy khóa bí mật. Vui lòng thử lại", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-                }
-
             }
         }
 
@@ -148,60 +198,108 @@ namespace Digital_Signature
 
         private void btnCreateSig_Click(object sender, EventArgs e)
         {
-            btnSign.Enabled = true;
-            txtName.Enabled = true;
-            cbGender.Enabled = true;
-            dateBirth.Enabled = true;
-            txtYear.Enabled = true;
-            txtEmail.Enabled = true;
-            txtBorn.Enabled = true;
-            txtPhone.Enabled = true;
-            cbReligion.Enabled = true;
-            Random rd = new Random();
-            //Sinh ngẫu nhiên p, q thuoc so nguyen to
-            do
+            
+            if(listKeyUserCreated.Count > 0)
             {
-                p = rd.Next(0, 99);
-            } while (!CheckPrimeNum(p));
-
-            do
+                bunifuSnackbar1.Show(this, "Vui lòng không tạo khóa 2 lần", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+            }else if(listKeyUserCreated.Count == 0)
             {
-                q = rd.Next(0, 99);
-            } while (!CheckPrimeNum(q) || q == p);
-
-            if (p != q)
-            {
-                MessageBox.Show($"p: {p}");
-                MessageBox.Show($"q: {q}");
-                //Sinh khóa bí mật và khóa công khai
-                privateKey = createPrivateKey(p, q);
-                publicKey = createPublicKey(p, q);
-                privateKeyMD5 = EncryptMd5(privateKey.ToString());
-                MessageBox.Show($"Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này");
-                List<KeyDTO> listKey = KeyBLL.getAllKey();
-                int id = listKey.Count + 1;
-                int n = p * q;
-                KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n, user_id);
-                bool resultAdd = KeyBLL.addNewKey(newKey);
-                List<KeyDTO> listKeyUser = KeyBLL.getKeyUser(user_id);
-                KeyDTO keyUser = listKeyUser[0];
-                bool resultAddSignUser = UserBLL.AddSignUser(keyUser.user_id, id);
-                
-                if (resultAdd == true && resultAddSignUser == true)
+                //Nếu người dùng nhập đầy đủ thông tin => Hiển thị lên Gridview + Tạo khóa
+                string fullName = txtName.Text;
+                string gender = cbGender.Text;
+                DateTime birth = dateBirth.Value;
+                string graYear = txtYear.Text;
+                string email = txtEmail.Text;
+                string birthPlace = txtBorn.Text;
+                string phone = txtPhone.Text;
+                string ethic = cbReligion.Text;
+                string[] infoArr = { fullName, gender, birth.ToString(), graYear, email, birthPlace, phone, ethic };
+                int count = 0;
+                //Validate thông tin nhập vào
+                for (int i = 0; i < infoArr.Length; i++)
                 {
-                    MessageBox.Show("Thêm thành công");
-                    for(int i = 0; i < listKey.Count; i++)
+                    if (infoArr[i] != "")
                     {
-                        MessageBox.Show(listKey[i].ToString());
+                        count++;
                     }
-                    bunifuSnackbar1.Show(this, $"Tạo chữ ký thành công. Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-                    MessageBox.Show($"Khóa công khai: {publicKey}");
+                }
+                if (count == infoArr.Length)
+                {
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add("Họ và tên");
+                    dataTable.Columns.Add("Giới tính");
+                    dataTable.Columns.Add("Ngày sinh");
+                    dataTable.Columns.Add("Năm tốt nghiệp");
+                    dataTable.Columns.Add("Email");
+                    dataTable.Columns.Add("Nơi sinh");
+                    dataTable.Columns.Add("SDT");
+                    dataTable.Columns.Add("Dân tộc");
+                    gridviewConfirm.DataSource = dataTable;
+                    dataTable.Rows.Add(txtName.Text, cbGender.Text, birth.ToString(), txtYear.Text, txtEmail.Text, txtBorn.Text, txtPhone.Text, cbReligion.Text);
+                    gridviewConfirm.DataSource = dataTable;
+                    gridviewConfirm.Columns[0].HeaderText = "Họ và tên";
+                    gridviewConfirm.Columns[1].HeaderText = "Giới tính";
+                    gridviewConfirm.Columns[2].HeaderText = "Ngày sinh";
+                    gridviewConfirm.Columns[3].HeaderText = "Năm tốt nghiệp";
+                    gridviewConfirm.Columns[4].HeaderText = "Email";
+                    gridviewConfirm.Columns[5].HeaderText = "Nơi sinh";
+                    gridviewConfirm.Columns[6].HeaderText = "SDT";
+                    gridviewConfirm.Columns[7].HeaderText = "Dân tộc";
+
+                    Random rd = new Random();
+                    //Sinh ngẫu nhiên p, q thuoc so nguyen to
+                    do
+                    {
+                        p = rd.Next(0, 99);
+                    } while (!CheckPrimeNum(p));
+
+                    do
+                    {
+                        q = rd.Next(0, 99);
+                    } while (!CheckPrimeNum(q) || q == p);
+
+                    if (p != q)
+                    {
+                        MessageBox.Show($"p: {p}");
+                        MessageBox.Show($"q: {q}");
+                        //Sinh khóa bí mật và khóa công khai
+                        privateKey = createPrivateKey(p, q);
+                        publicKey = createPublicKey(p, q);
+                        privateKeyMD5 = EncryptMd5(privateKey.ToString());
+                        MessageBox.Show($"Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này");
+                        List<KeyDTO> listKey = KeyBLL.getAllKey();
+                        int id = listKey.Count + 1;
+                        int n = p * q;
+                        KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n, user_id);
+                        bool resultAdd = KeyBLL.addNewKey(newKey);
+                        List<KeyDTO> listKeyUser = KeyBLL.getKeyUser(user_id);
+                        KeyDTO keyUser = listKeyUser[0];
+                        bool resultAddSignUser = UserBLL.AddSignUser(keyUser.user_id, id);
+
+                        if (resultAdd == true && resultAddSignUser == true)
+                        {
+                            MessageBox.Show("Thêm thành công");
+                            for (int i = 0; i < listKey.Count; i++)
+                            {
+                                MessageBox.Show(listKey[i].ToString());
+                            }
+                            bunifuSnackbar1.Show(this, $"Tạo chữ ký thành công. Khóa bí mật của bạn là: {privateKey}. Hãy ghi nhớ khóa này", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                            MessageBox.Show($"Khóa công khai: {publicKey}");
+                        }
+                        else
+                        {
+                            bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                        }
+                    }
+
                 }
                 else
                 {
-                    bunifuSnackbar1.Show(this, "Có lỗi xảy ra", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                    bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 }
+                
             }
+            
         }
 
         private string EncryptMd5(string plainText)
