@@ -13,6 +13,7 @@
           <Property Name="private_key" Type="char" MaxLength="32" Nullable="false" />
           <Property Name="public_key" Type="int" Nullable="false" />
           <Property Name="n" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_student_cipher">
           <Key>
@@ -28,6 +29,7 @@
           <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="religion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_student_plain">
           <Key>
@@ -43,6 +45,7 @@
           <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="religion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_user">
           <Key>
@@ -167,6 +170,7 @@
           <Property Name="private_key" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="false" />
           <Property Name="public_key" Type="Int32" Nullable="false" />
           <Property Name="n" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_user_tbl_key" FromRole="tbl_key" ToRole="tbl_user" />
         </EntityType>
         <EntityType Name="tbl_student_cipher">
@@ -183,6 +187,7 @@
           <Property Name="phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="religion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_student_cipher_tbl_user" FromRole="tbl_student_cipher" ToRole="tbl_user" />
         </EntityType>
         <EntityType Name="tbl_student_plain">
@@ -199,6 +204,7 @@
           <Property Name="phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="religion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_student_plain_tbl_user" FromRole="tbl_student_plain" ToRole="tbl_user" />
         </EntityType>
         <EntityType Name="tbl_user">
@@ -280,6 +286,7 @@
           <EntitySetMapping Name="tbl_key">
             <EntityTypeMapping TypeName="db_RSAModel.tbl_key">
               <MappingFragment StoreEntitySet="tbl_key">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="n" ColumnName="n" />
                 <ScalarProperty Name="public_key" ColumnName="public_key" />
                 <ScalarProperty Name="private_key" ColumnName="private_key" />
@@ -290,6 +297,7 @@
           <EntitySetMapping Name="tbl_student_cipher">
             <EntityTypeMapping TypeName="db_RSAModel.tbl_student_cipher">
               <MappingFragment StoreEntitySet="tbl_student_cipher">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="religion" ColumnName="religion" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
@@ -306,6 +314,7 @@
           <EntitySetMapping Name="tbl_student_plain">
             <EntityTypeMapping TypeName="db_RSAModel.tbl_student_plain">
               <MappingFragment StoreEntitySet="tbl_student_plain">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="religion" ColumnName="religion" />
                 <ScalarProperty Name="phone" ColumnName="phone" />

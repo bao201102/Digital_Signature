@@ -24,6 +24,7 @@ namespace Digital_Signature
         public string phone { get; set; }
         public string religion { get; set; }
         public int user_id { get; set; }
+        public int status { get; set; }
     
         public virtual tbl_user tbl_user { get; set; }
     }

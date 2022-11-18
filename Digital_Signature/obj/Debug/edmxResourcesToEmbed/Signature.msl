@@ -4,6 +4,7 @@
     <EntitySetMapping Name="tbl_key">
       <EntityTypeMapping TypeName="db_RSAModel.tbl_key">
         <MappingFragment StoreEntitySet="tbl_key">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="n" ColumnName="n" />
           <ScalarProperty Name="public_key" ColumnName="public_key" />
           <ScalarProperty Name="private_key" ColumnName="private_key" />
@@ -14,6 +15,7 @@
     <EntitySetMapping Name="tbl_student_cipher">
       <EntityTypeMapping TypeName="db_RSAModel.tbl_student_cipher">
         <MappingFragment StoreEntitySet="tbl_student_cipher">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="religion" ColumnName="religion" />
           <ScalarProperty Name="phone" ColumnName="phone" />
@@ -30,6 +32,7 @@
     <EntitySetMapping Name="tbl_student_plain">
       <EntityTypeMapping TypeName="db_RSAModel.tbl_student_plain">
         <MappingFragment StoreEntitySet="tbl_student_plain">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="religion" ColumnName="religion" />
           <ScalarProperty Name="phone" ColumnName="phone" />

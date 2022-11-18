@@ -31,6 +31,7 @@
     <Property Name="private_key" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="false" />
     <Property Name="public_key" Type="Int32" Nullable="false" />
     <Property Name="n" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_user_tbl_key" FromRole="tbl_key" ToRole="tbl_user" />
   </EntityType>
   <EntityType Name="tbl_student_cipher">
@@ -47,6 +48,7 @@
     <Property Name="phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="religion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_student_cipher_tbl_user" FromRole="tbl_student_cipher" ToRole="tbl_user" />
   </EntityType>
   <EntityType Name="tbl_student_plain">
@@ -63,6 +65,7 @@
     <Property Name="phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="religion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tbl_user" Relationship="db_RSAModel.FK_tbl_student_plain_tbl_user" FromRole="tbl_student_plain" ToRole="tbl_user" />
   </EntityType>
   <EntityType Name="tbl_user">

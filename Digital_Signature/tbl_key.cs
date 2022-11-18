@@ -23,6 +23,7 @@ namespace Digital_Signature
         public string private_key { get; set; }
         public int public_key { get; set; }
         public int n { get; set; }
+        public int user_id { get; set; }
     
         public virtual ICollection<tbl_user> tbl_user { get; set; }
     }
