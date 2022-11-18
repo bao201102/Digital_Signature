@@ -50,6 +50,9 @@
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties3 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
             Bunifu.UI.WinForms.BunifuTextBox.StateProperties stateProperties4 = new Bunifu.UI.WinForms.BunifuTextBox.StateProperties();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Sign));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.txtName = new Bunifu.UI.WinForms.BunifuTextBox();
             this.titlePanel = new Bunifu.Framework.UI.BunifuGradientPanel();
@@ -75,7 +78,9 @@
             this.btnSign = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btnCreateSig = new Bunifu.Framework.UI.BunifuThinButton2();
             this.bunifuSnackbar1 = new Bunifu.UI.WinForms.BunifuSnackbar(this.components);
+            this.gridviewConfirm = new Bunifu.UI.WinForms.BunifuDataGridView();
             this.titlePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridviewConfirm)).BeginInit();
             this.SuspendLayout();
             // 
             // bunifuElipse1
@@ -948,12 +953,79 @@
             this.bunifuSnackbar1.WarningOptions.IconLeftMargin = 12;
             this.bunifuSnackbar1.ZoomCloseIcon = true;
             // 
+            // gridviewConfirm
+            // 
+            this.gridviewConfirm.AllowCustomTheming = false;
+            this.gridviewConfirm.AllowUserToAddRows = false;
+            this.gridviewConfirm.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.gridviewConfirm.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.gridviewConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridviewConfirm.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridviewConfirm.BackgroundColor = System.Drawing.Color.White;
+            this.gridviewConfirm.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridviewConfirm.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.gridviewConfirm.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.DodgerBlue;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.75F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(115)))), ((int)(((byte)(204)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridviewConfirm.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.gridviewConfirm.ColumnHeadersHeight = 40;
+            this.gridviewConfirm.CurrentTheme.AlternatingRowsStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+            this.gridviewConfirm.CurrentTheme.AlternatingRowsStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.gridviewConfirm.CurrentTheme.AlternatingRowsStyle.ForeColor = System.Drawing.Color.Black;
+            this.gridviewConfirm.CurrentTheme.AlternatingRowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
+            this.gridviewConfirm.CurrentTheme.AlternatingRowsStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.gridviewConfirm.CurrentTheme.BackColor = System.Drawing.Color.White;
+            this.gridviewConfirm.CurrentTheme.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(238)))), ((int)(((byte)(255)))));
+            this.gridviewConfirm.CurrentTheme.HeaderStyle.BackColor = System.Drawing.Color.DodgerBlue;
+            this.gridviewConfirm.CurrentTheme.HeaderStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 11.75F, System.Drawing.FontStyle.Bold);
+            this.gridviewConfirm.CurrentTheme.HeaderStyle.ForeColor = System.Drawing.Color.White;
+            this.gridviewConfirm.CurrentTheme.HeaderStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(115)))), ((int)(((byte)(204)))));
+            this.gridviewConfirm.CurrentTheme.HeaderStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.gridviewConfirm.CurrentTheme.Name = null;
+            this.gridviewConfirm.CurrentTheme.RowsStyle.BackColor = System.Drawing.Color.White;
+            this.gridviewConfirm.CurrentTheme.RowsStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.gridviewConfirm.CurrentTheme.RowsStyle.ForeColor = System.Drawing.Color.Black;
+            this.gridviewConfirm.CurrentTheme.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
+            this.gridviewConfirm.CurrentTheme.RowsStyle.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridviewConfirm.DefaultCellStyle = dataGridViewCellStyle3;
+            this.gridviewConfirm.EnableHeadersVisualStyles = false;
+            this.gridviewConfirm.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(238)))), ((int)(((byte)(255)))));
+            this.gridviewConfirm.HeaderBackColor = System.Drawing.Color.DodgerBlue;
+            this.gridviewConfirm.HeaderBgColor = System.Drawing.Color.Empty;
+            this.gridviewConfirm.HeaderForeColor = System.Drawing.Color.White;
+            this.gridviewConfirm.Location = new System.Drawing.Point(681, 113);
+            this.gridviewConfirm.Name = "gridviewConfirm";
+            this.gridviewConfirm.ReadOnly = true;
+            this.gridviewConfirm.RowHeadersVisible = false;
+            this.gridviewConfirm.RowTemplate.Height = 40;
+            this.gridviewConfirm.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridviewConfirm.Size = new System.Drawing.Size(593, 361);
+            this.gridviewConfirm.TabIndex = 38;
+            this.gridviewConfirm.Theme = Bunifu.UI.WinForms.BunifuDataGridView.PresetThemes.Light;
+            // 
             // frm_Sign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1300, 700);
+            this.Controls.Add(this.gridviewConfirm);
             this.Controls.Add(this.btnCreateSig);
             this.Controls.Add(this.btnSign);
             this.Controls.Add(this.bunifuLabel10);
@@ -981,6 +1053,7 @@
             this.Text = "frm_Sign";
             this.Load += new System.EventHandler(this.frm_Sign_Load);
             this.titlePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridviewConfirm)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1013,5 +1086,6 @@
         private Bunifu.Framework.UI.BunifuThinButton2 btnSign;
         private Bunifu.Framework.UI.BunifuThinButton2 btnCreateSig;
         private Bunifu.UI.WinForms.BunifuSnackbar bunifuSnackbar1;
+        public Bunifu.UI.WinForms.BunifuDataGridView gridviewConfirm;
     }
 }
