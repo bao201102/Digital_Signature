@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="66a196d860cb46339fd526755c4ca232" Name="Diagram1">
-        <EntityTypeShape EntityType="db_RSAModel.tbl_key" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="db_RSAModel.tbl_student_cipher" Width="1.5" PointX="5.25" PointY="5.25" />
-        <EntityTypeShape EntityType="db_RSAModel.tbl_student_plain" Width="1.5" PointX="5.25" PointY="1.25" />
-        <EntityTypeShape EntityType="db_RSAModel.tbl_user" Width="1.5" PointX="3" PointY="3.5" />
-        <EntityTypeShape EntityType="db_RSAModel.tbl_usertype" Width="1.5" PointX="0.75" PointY="1.125" />
-        <AssociationConnector Association="db_RSAModel.FK_tbl_user_tbl_key" />
-        <AssociationConnector Association="db_RSAModel.FK_tbl_student_cipher_tbl_user" />
-        <AssociationConnector Association="db_RSAModel.FK_tbl_student_plain_tbl_user" />
-        <AssociationConnector Association="db_RSAModel.FK_tbl_user_tbl_usertype" />
+      <Diagram DiagramId="f4df0d368870424093256b7aefbbc243" Name="Diagram1">
+        <EntityTypeShape EntityType="db_RSAModel.tbl_key" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_RSAModel.tbl_student_cipher" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_RSAModel.tbl_student_plain" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_RSAModel.tbl_user" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_RSAModel.tbl_usertype" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="db_RSAModel.FK_tbl_user_tbl_key" ManuallyRouted="false" />
+        <AssociationConnector Association="db_RSAModel.FK_tbl_student_cipher_tbl_user" ManuallyRouted="false" />
+        <AssociationConnector Association="db_RSAModel.FK_tbl_student_plain_tbl_user" ManuallyRouted="false" />
+        <AssociationConnector Association="db_RSAModel.FK_tbl_user_tbl_usertype" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

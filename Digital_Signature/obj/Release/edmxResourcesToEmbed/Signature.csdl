@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_RSAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_key">
+    <Key>
+      <PropertyRef Name="sig_id" />
+    </Key>
+    <Property Name="sig_id" Type="Int32" Nullable="false" />
+    <Property Name="private_key" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="public_key" Type="Int32" Nullable="false" />
+    <Property Name="n" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_user" Relationship="Self.FK_tbl_user_tbl_key" FromRole="tbl_key" ToRole="tbl_user" />
+  </EntityType>
+  <EntityType Name="tbl_student_cipher">
+    <Key>
+      <PropertyRef Name="stu_id" />
+    </Key>
+    <Property Name="stu_id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="graduation_year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="place_of_birth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="religion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_user" Relationship="Self.FK_tbl_student_cipher_tbl_user" FromRole="tbl_student_cipher" ToRole="tbl_user" />
+  </EntityType>
+  <EntityType Name="tbl_student_plain">
+    <Key>
+      <PropertyRef Name="stu_id" />
+    </Key>
+    <Property Name="stu_id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="graduation_year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="place_of_birth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="religion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_user" Relationship="Self.FK_tbl_student_plain_tbl_user" FromRole="tbl_student_plain" ToRole="tbl_user" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="user_type_id" Type="Int32" Nullable="false" />
+    <Property Name="sig_id" Type="Int32" />
+    <NavigationProperty Name="tbl_key" Relationship="Self.FK_tbl_user_tbl_key" FromRole="tbl_user" ToRole="tbl_key" />
+    <NavigationProperty Name="tbl_student_cipher" Relationship="Self.FK_tbl_student_cipher_tbl_user" FromRole="tbl_user" ToRole="tbl_student_cipher" />
+    <NavigationProperty Name="tbl_student_plain" Relationship="Self.FK_tbl_student_plain_tbl_user" FromRole="tbl_user" ToRole="tbl_student_plain" />
+    <NavigationProperty Name="tbl_usertype" Relationship="Self.FK_tbl_user_tbl_usertype" FromRole="tbl_user" ToRole="tbl_usertype" />
+  </EntityType>
+  <EntityType Name="tbl_usertype">
+    <Key>
+      <PropertyRef Name="user_type_id" />
+    </Key>
+    <Property Name="user_type_id" Type="Int32" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_user" Relationship="Self.FK_tbl_user_tbl_usertype" FromRole="tbl_usertype" ToRole="tbl_user" />
+  </EntityType>
+  <Association Name="FK_tbl_user_tbl_key">
+    <End Role="tbl_key" Type="Self.tbl_key" Multiplicity="0..1" />
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_key">
+        <PropertyRef Name="sig_id" />
+      </Principal>
+      <Dependent Role="tbl_user">
+        <PropertyRef Name="sig_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_student_cipher_tbl_user">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_student_cipher" Type="Self.tbl_student_cipher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="tbl_student_cipher">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_student_plain_tbl_user">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_student_plain" Type="Self.tbl_student_plain" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="tbl_student_plain">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_user_tbl_usertype">
+    <End Role="tbl_usertype" Type="Self.tbl_usertype" Multiplicity="1" />
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_usertype">
+        <PropertyRef Name="user_type_id" />
+      </Principal>
+      <Dependent Role="tbl_user">
+        <PropertyRef Name="user_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_RSAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_key" EntityType="Self.tbl_key" />
+    <EntitySet Name="tbl_student_cipher" EntityType="Self.tbl_student_cipher" />
+    <EntitySet Name="tbl_student_plain" EntityType="Self.tbl_student_plain" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" />
+    <EntitySet Name="tbl_usertype" EntityType="Self.tbl_usertype" />
+    <AssociationSet Name="FK_tbl_user_tbl_key" Association="Self.FK_tbl_user_tbl_key">
+      <End Role="tbl_key" EntitySet="tbl_key" />
+      <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_student_cipher_tbl_user" Association="Self.FK_tbl_student_cipher_tbl_user">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_student_cipher" EntitySet="tbl_student_cipher" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_student_plain_tbl_user" Association="Self.FK_tbl_student_plain_tbl_user">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_student_plain" EntitySet="tbl_student_plain" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_user_tbl_usertype" Association="Self.FK_tbl_user_tbl_usertype">
+      <End Role="tbl_usertype" EntitySet="tbl_usertype" />
+      <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

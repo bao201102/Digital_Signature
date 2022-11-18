@@ -57,21 +57,20 @@ namespace Digital_Signature.DAL
         }
 
         //Lấy khóa người dùng vừa tạo
-        public static List<KeyDTO> getKeyUser(int userId)
+        public static int getKeyUser(int userId)
         {
             db_RSAEntities db_RSAEntities = new db_RSAEntities();
-            var keys = from key in db_RSAEntities.tbl_key
+            var keys = (from key in db_RSAEntities.tbl_key
                        where key.user_id.Equals(userId)
-                       select key;
-            List<KeyDTO> keyDTOs = new List<KeyDTO>();
-            foreach (tbl_key ikey in keys)
+                       select key).SingleOrDefault();
+            if (keys != null)
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<tbl_key, KeyDTO>());
-                var mapper = new Mapper(config);
-                KeyDTO khoa = mapper.Map<KeyDTO>(ikey);
-                keyDTOs.Add(khoa);
+                return keys.user_id;
             }
-            return keyDTOs;
+            else
+            {
+                return -1;
+            }
         }
         
     }

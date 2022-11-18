@@ -30,7 +30,7 @@ namespace Digital_Signature
         List<StudentCipherDTO> listStudentSigned = new List<StudentCipherDTO>();
         List<StudentPlainDTO> listStudentPlainSigned = new List<StudentPlainDTO>();
         List<KeyDTO> listKeyUserCreated = new List<KeyDTO>();
-        
+
         public frm_Sign(int id)
         {
             InitializeComponent();
@@ -46,7 +46,7 @@ namespace Digital_Signature
             user_id = id;
             listStudentSigned = StudentCipherBLL.getStudentsSigned(id);
             listStudentPlainSigned = StudentPlainBLL.getStudentsSigned(id);
-            listKeyUserCreated = KeyBLL.getKeyUser(id);
+            //listKeyUserCreated = KeyBLL.getKeyUser(id);
         }
 
         private void frm_Sign_Load(object sender, EventArgs e)
@@ -84,15 +84,16 @@ namespace Digital_Signature
                 txtPhone.Enabled = false;
                 cbReligion.Enabled = false;
             }
-            
+
         }
 
         private void btnSign_Click(object sender, EventArgs e)
         {
-            if(listKeyUserCreated.Count == 0)
+            if (KeyBLL.getKeyUser(user_id) == -1)
             {
-               bunifuSnackbar1.Show(this, "Vui lòng tạo khóa trước khi kí!", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-            }else if(listKeyUserCreated.Count > 0)
+                bunifuSnackbar1.Show(this, "Vui lòng tạo khóa trước khi kí!", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+            }
+            else
             {
                 if (true)
                 {
@@ -198,11 +199,12 @@ namespace Digital_Signature
 
         private void btnCreateSig_Click(object sender, EventArgs e)
         {
-            
-            if(listKeyUserCreated.Count > 0)
+
+            if (KeyBLL.getKeyUser(user_id) > -1)
             {
                 bunifuSnackbar1.Show(this, "Vui lòng không tạo khóa 2 lần", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-            }else if(listKeyUserCreated.Count == 0)
+            }
+            else
             {
                 //Nếu người dùng nhập đầy đủ thông tin => Hiển thị lên Gridview + Tạo khóa
                 string fullName = txtName.Text;
@@ -272,9 +274,8 @@ namespace Digital_Signature
                         int n = p * q;
                         KeyDTO newKey = new KeyDTO(id, privateKeyMD5, publicKey, n, user_id);
                         bool resultAdd = KeyBLL.addNewKey(newKey);
-                        List<KeyDTO> listKeyUser = KeyBLL.getKeyUser(user_id);
-                        KeyDTO keyUser = listKeyUser[0];
-                        bool resultAddSignUser = UserBLL.AddSignUser(keyUser.user_id, id);
+                        int keyUser = KeyBLL.getKeyUser(user_id);
+                        bool resultAddSignUser = UserBLL.AddSignUser(keyUser, id);
 
                         if (resultAdd == true && resultAddSignUser == true)
                         {
@@ -297,9 +298,9 @@ namespace Digital_Signature
                 {
                     bunifuSnackbar1.Show(this, "Vui lòng nhập đủ thông tin", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 }
-                
+
             }
-            
+
         }
 
         private string EncryptMd5(string plainText)
