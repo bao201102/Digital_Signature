@@ -1,5 +1,4 @@
 ﻿using Digital_Signature.BLL;
-using Digital_Signature.DAL;
 using Digital_Signature.DTO;
 using Digital_Signature.PL;
 using System;
@@ -26,6 +25,7 @@ namespace Digital_Signature
         public frm_Sign(int id)
         {
             InitializeComponent();
+            lblStatus.Hide();
             user_id = id;
             cbGender.SelectedIndex = 0;
             cbReligion.SelectedIndex = 0;
@@ -101,10 +101,10 @@ namespace Digital_Signature
                 cipherInfoList.Add(item.Key, digSig.Sign(item.Value.ToString().Split(' '), eKey, KeyBLL.getKeyByUserId(user_id).n));
             }
 
-            StudentPlainDTO studentPlain = new StudentPlainDTO(0, strInfoList["txtName"].ToString(), strInfoList["cbGender"].ToString(), dateBirth.Value, strInfoList["txtYear"].ToString(), strInfoList["txtEmail"].ToString(), strInfoList["txtBorn"].ToString(), strInfoList["txtPhone"].ToString(), strInfoList["cbReligion"].ToString(), user_id, 0);
+            StudentPlainDTO studentPlain = new StudentPlainDTO(0, strInfoList["txtName"].ToString(), strInfoList["cbGender"].ToString(), dateBirth.Value, strInfoList["txtYear"].ToString(), strInfoList["txtEmail"].ToString(), strInfoList["txtBorn"].ToString(), strInfoList["txtPhone"].ToString(), strInfoList["cbReligion"].ToString(), user_id, 1);
             bool resultAddPlain = StudentPlainBLL.addNewStudent(studentPlain);
 
-            StudentCipherDTO studentCipher = new StudentCipherDTO(0, cipherInfoList["txtName"].ToString(), cipherInfoList["cbGender"].ToString(), dateBirth.Value, cipherInfoList["txtYear"].ToString(), cipherInfoList["txtEmail"].ToString(), cipherInfoList["txtBorn"].ToString(), cipherInfoList["txtPhone"].ToString(), cipherInfoList["cbReligion"].ToString(), user_id, 0);
+            StudentCipherDTO studentCipher = new StudentCipherDTO(0, cipherInfoList["txtName"].ToString(), cipherInfoList["cbGender"].ToString(), dateBirth.Value, cipherInfoList["txtYear"].ToString(), cipherInfoList["txtEmail"].ToString(), cipherInfoList["txtBorn"].ToString(), cipherInfoList["txtPhone"].ToString(), cipherInfoList["cbReligion"].ToString(), user_id, 1);
             bool resultAddCipher = StudentCipherBLL.addNewStudent(studentCipher);
 
             if (resultAddCipher == true && resultAddPlain == true)
@@ -119,48 +119,56 @@ namespace Digital_Signature
 
         private void frm_Sign_Load(object sender, EventArgs e)
         {
-            //if (KeyBLL.getKeyUser(user_id) > -1)
-            //{
-            //    btnCreateSig.Enabled = false;
-            //    btnSign.Enabled = false;
-            //    txtName.Text = listStudentPlainSigned[0].name;
-            //    cbGender.Text = listStudentPlainSigned[0].sex;
-            //    dateBirth.Value = listStudentPlainSigned[0].birthday;
-            //    txtYear.Text = listStudentPlainSigned[0].graduation_year;
-            //    txtEmail.Text = listStudentPlainSigned[0].email;
-            //    txtBorn.Text = listStudentPlainSigned[0].place_of_birth;
-            //    txtPhone.Text = listStudentPlainSigned[0].phone;
-            //    cbReligion.Text = listStudentPlainSigned[0].religion;
-            //    txtName.Enabled = false;
-            //    cbGender.Enabled = false;
-            //    dateBirth.Enabled = false;
-            //    txtYear.Enabled = false;
-            //    txtEmail.Enabled = false;
-            //    txtBorn.Enabled = false;
-            //    txtPhone.Enabled = false;
-            //    cbReligion.Enabled = false;
-            //}
+            StudentPlainDTO student = StudentPlainBLL.getStudentSigned(user_id);
+            if (student != null)
+            {
+                txtName.Text = student.name;
+                cbGender.Text = student.sex;
+                dateBirth.Value = student.birthday;
+                txtYear.Text = student.graduation_year;
+                txtEmail.Text = student.email;
+                txtBorn.Text = student.place_of_birth;
+                txtPhone.Text = student.phone;
+                cbReligion.Text = student.religion;
+                txtName.Enabled = false;
+                cbGender.Enabled = false;
+                dateBirth.Enabled = false;
+                txtYear.Enabled = false;
+                txtEmail.Enabled = false;
+                txtBorn.Enabled = false;
+                txtPhone.Enabled = false;
+                cbReligion.Enabled = false;
+                lblStatus.Show();
+            }
             digSig = new DigSig();
         }
 
         private void btnSign_Click(object sender, EventArgs e)
         {
-            if (KeyBLL.getKeyUser(user_id) < 0)
+            StudentPlainDTO student = StudentPlainBLL.getStudentSigned(user_id);
+            if (student == null)
             {
-                bunifuSnackbar1.Show(this, "Vui lòng tạo khóa trước khi kí!", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
-            }
-            else
-            {
-                string privateKeyMD5 = EncryptMd5(txtPrivateKey.Text.ToString());
-
-                if (privateKeyMD5 == KeyBLL.getKeyByUserId(user_id).private_key)
+                if (KeyBLL.getKeyUser(user_id) < 0)
                 {
-                    Sign(int.Parse(txtPrivateKey.Text.ToString()));
+                    bunifuSnackbar1.Show(this, "Vui lòng tạo khóa trước khi kí!", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
                 }
                 else
                 {
-                    bunifuSnackbar1.Show(this, "Khóa bí mật không đúng. Vui lòng thử lại", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                    string privateKeyMD5 = EncryptMd5(txtPrivateKey.Text.ToString());
+
+                    if (privateKeyMD5 == KeyBLL.getKeyByUserId(user_id).private_key)
+                    {
+                        Sign(int.Parse(txtPrivateKey.Text.ToString()));
+                    }
+                    else
+                    {
+                        bunifuSnackbar1.Show(this, "Khóa bí mật không đúng. Vui lòng thử lại!", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
+                    }
                 }
+            }
+            else
+            {
+                bunifuSnackbar1.Show(this, "Bạn đã thực hiện ký văn bản từ trước!", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Warning);
             }
         }
 
@@ -183,9 +191,6 @@ namespace Digital_Signature
             else
             {
                 digSig.GenerateKey();
-
-                MessageBox.Show(digSig.P.ToString());
-                MessageBox.Show(digSig.Q.ToString());
 
                 string privateKeyMD5 = EncryptMd5(digSig.DKey.ToString());
 

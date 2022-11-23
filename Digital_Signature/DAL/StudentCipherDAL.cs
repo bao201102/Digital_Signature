@@ -26,27 +26,12 @@ namespace Digital_Signature.DAL
 
             try
             {
-                // Your code...
-                // Could also be before try if you know the exception occurs in SaveChanges
-
-                return db.SaveChanges() > 0 ? true : false;
+                db.SaveChanges();
+                return true;
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                return false;
             }
         }
  

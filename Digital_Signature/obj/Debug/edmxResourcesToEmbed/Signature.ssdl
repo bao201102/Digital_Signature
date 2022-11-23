@@ -19,7 +19,7 @@
     <Property Name="sex" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="birthday" Type="date" Nullable="false" />
     <Property Name="graduation_year" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="place_of_birth" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="phone" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="religion" Type="varchar" MaxLength="100" Nullable="false" />

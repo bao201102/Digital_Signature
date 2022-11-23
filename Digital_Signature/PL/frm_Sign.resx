@@ -193,7 +193,7 @@
         gg==
 </value>
   </data>
-  <data name="statusLbl.BaseStylesheet" xml:space="preserve">
+  <data name="lblStatus.BaseStylesheet" xml:space="preserve">
     <value>#bunifu-label { padding: 0px; font-family: 'Leelawadee UI'; font-size: 15pt; width: 100%; height: 100%; font-style: normal; font-weight: bold; text-decoration: none; color: rgb(60, 179, 113); text-align: left; }</value>
   </data>
   <data name="txtEmail.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -10,8 +10,6 @@ namespace Digital_Signature.DAL
 {
     class KeyDAL
     {
-
-        //Thêm key vào CSDL
         public static bool addNewKey(KeyDTO newKey)
         {
             db_RSAEntities db = new db_RSAEntities();
@@ -35,7 +33,6 @@ namespace Digital_Signature.DAL
             }
         }
 
-        //Lấy ra tất cả khóa trong CSDL
         public static List<KeyDTO> getAllKey()
         {
             db_RSAEntities db = new db_RSAEntities();
@@ -53,14 +50,13 @@ namespace Digital_Signature.DAL
             return listKey;
         }
 
-        //Lấy khóa theo user_id từ CSDL
         public static KeyDTO getKeyByUserId(int user_id)
         {
             db_RSAEntities db = new db_RSAEntities();
 
             tbl_key query = (from x in db.tbl_key
-                        where x.user_id == user_id
-                        select x).SingleOrDefault();
+                             where x.user_id == user_id
+                             select x).SingleOrDefault();
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<tbl_key, KeyDTO>());
             var mapper = new Mapper(config);
@@ -69,7 +65,6 @@ namespace Digital_Signature.DAL
             return Key;
         }
 
-        //Lấy khóa người dùng vừa tạo
         public static int getKeyUser(int userId)
         {
             db_RSAEntities db = new db_RSAEntities();

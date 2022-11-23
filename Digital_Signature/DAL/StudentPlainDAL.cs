@@ -33,22 +33,38 @@ namespace Digital_Signature.DAL
             }
         }
 
-        //Lấy ra học sinh đã ký
-        public static List<StudentPlainDTO> getStudentsSigned(int userId)
+        public static List<StudentPlainDTO> getAllStudentSigned()
         {
             db_RSAEntities db = new db_RSAEntities();
-            List<StudentPlainDTO> stuPlainDTOs = new List<StudentPlainDTO>();
-            var stu_plains = from skey in db.tbl_student_plain
-                              where skey.user_id == userId
-                              select skey;
-            foreach (tbl_student_plain stu_plain in stu_plains)
+
+            var query = from x in db.tbl_student_plain
+                        select x;
+
+            List<StudentPlainDTO> list = new List<StudentPlainDTO>();
+            foreach (tbl_student_plain item in query)
             {
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<tbl_student_plain, StudentPlainDTO>());
                 var mapper = new Mapper(config);
-                StudentPlainDTO studentPlain = mapper.Map<StudentPlainDTO>(stu_plain);
-                stuPlainDTOs.Add(studentPlain);
+                StudentPlainDTO studentPlain = mapper.Map<StudentPlainDTO>(item);
+                list.Add(studentPlain);
             }
-            return stuPlainDTOs;
+            
+            return list;
+        }
+
+        public static StudentPlainDTO getStudentSigned(int userId)
+        {
+            db_RSAEntities db = new db_RSAEntities();
+
+            tbl_student_plain query = (from x in db.tbl_student_plain
+                                       where x.user_id == userId
+                                       select x).SingleOrDefault();
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<tbl_student_plain, StudentPlainDTO>());
+            var mapper = new Mapper(config);
+            StudentPlainDTO studentPlain = mapper.Map<StudentPlainDTO>(query);
+
+            return studentPlain;
         }
     }
 }
