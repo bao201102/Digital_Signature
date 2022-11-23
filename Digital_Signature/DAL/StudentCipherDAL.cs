@@ -2,6 +2,7 @@
 using Digital_Signature.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,17 +12,44 @@ namespace Digital_Signature.DAL
 {
     internal class StudentCipherDAL
     {
-        //Thêm sinh viên vào CSDL
         public static bool addNewStudent(StudentCipherDTO studentCipher)
         {
-            db_RSAEntities db_RSAEntities = new db_RSAEntities();
+            db_RSAEntities db = new db_RSAEntities();
+
+            var query = (from x in db.tbl_student_cipher select x).Count();
+            studentCipher.stu_id = query + 1;
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<StudentCipherDTO, tbl_student_cipher>());
             var mapper = new Mapper(config);
             tbl_student_cipher student = mapper.Map<tbl_student_cipher>(studentCipher);
-            db_RSAEntities.tbl_student_cipher.Add(student);
-            return db_RSAEntities.SaveChanges() > 0 ? true : false;
+            db.tbl_student_cipher.Add(student);
+
+            try
+            {
+                // Your code...
+                // Could also be before try if you know the exception occurs in SaveChanges
+
+                return db.SaveChanges() > 0 ? true : false;
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting  
+                        // the current instance as InnerException  
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
         }
-        //Lấy tất cả sinh viên từ CSDL
+ 
         public static List<object> getAllStudent()
         {
             db_RSAEntities db_RSAEntities = new db_RSAEntities();
@@ -49,7 +77,7 @@ namespace Digital_Signature.DAL
             }
             return list;
         }
-        //Lấy ra học sinh đã ký
+
         public static List<StudentCipherDTO> getStudentsSigned(int userId)
         {
             db_RSAEntities db_RSAEntities = new db_RSAEntities();

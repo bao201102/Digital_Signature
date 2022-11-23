@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f4df0d368870424093256b7aefbbc243" Name="Diagram1">
         <EntityTypeShape EntityType="db_RSAModel.tbl_key" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_RSAModel.tbl_student_cipher" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_RSAModel.tbl_student_cipher" Width="2.375" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="db_RSAModel.tbl_student_plain" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="db_RSAModel.tbl_user" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="db_RSAModel.tbl_usertype" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />

@@ -229,6 +229,7 @@
     <Compile Include="DTO\StudentPlainDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="DTO\UserTypeDTO.cs" />
+    <Compile Include="PL\DigSig.cs" />
     <Compile Include="PL\frm_Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,12 +247,6 @@
     </Compile>
     <Compile Include="PL\frm_Verify.Designer.cs">
       <DependentUpon>frm_Verify.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PL\Messbox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PL\Messbox.Designer.cs">
-      <DependentUpon>Messbox.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -299,9 +294,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\frm_Verify.resx">
       <DependentUpon>frm_Verify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PL\Messbox.resx">
-      <DependentUpon>Messbox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
