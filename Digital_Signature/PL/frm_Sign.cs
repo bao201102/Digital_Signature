@@ -161,7 +161,7 @@ namespace Digital_Signature
                             List<object> listStudentCipher = StudentCipherBLL.getAllStudent();
                             int id = listStudentCipher.Count + 1;
                             StudentCipherDTO studentCipher = new StudentCipherDTO(id, resultSignArr[0], resultSignArr[1], birth, resultSignArr[2], resultSignArr[3], resultSignArr[4], resultSignArr[5], resultSignArr[6], user_id, 0);
-                            StudentPlainDTO studentPlain = new StudentPlainDTO(id, infoArr[0], infoArr[1], birth, infoArr[2], infoArr[3], infoArr[4], infoArr[5], infoArr[6], user_id, 0);
+                            StudentPlainDTO studentPlain = new StudentPlainDTO(id, infoArr[0], infoArr[1], birth, infoArr[3], infoArr[4], infoArr[5], infoArr[6], infoArr[7] , user_id, 0);
                             bool resultAdd = StudentCipherBLL.addNewStudent(studentCipher);
                             bool resultAddPlain = StudentPlainBLL.addNewStudent(studentPlain);
                             if (resultAdd == true && resultAddPlain == true)
