@@ -115,5 +115,10 @@ namespace Digital_Signature.DTO
             this.user_id = 0;
             this.status = 0;
         }
+
+        public override string ToString()
+        {
+            return this.name + "," + this.sex + "," + this.graduation_year + "," + this.email + "," + this.place_of_birth + "," + this.phone + "," + this.religion;
+        }
     }
 }

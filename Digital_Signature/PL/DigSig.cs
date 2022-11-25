@@ -184,7 +184,7 @@ namespace Digital_Signature.PL
 
             do
             {
-                eKey = rd.Next(1, phiN);
+                eKey = rd.Next(2, phiN - 1);
             } while (GCD(eKey, phiN) != 1);
 
             do

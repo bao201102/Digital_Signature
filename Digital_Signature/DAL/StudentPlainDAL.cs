@@ -33,6 +33,23 @@ namespace Digital_Signature.DAL
             }
         }
 
+        public static bool updateStuStatus(StudentPlainDTO studentPlain)
+        {
+            db_RSAEntities db = new db_RSAEntities();
+            tbl_student_plain query = db.tbl_student_plain.Where(x => x.stu_id.Equals(studentPlain.stu_id)).Single();
+            query.status = studentPlain.status;
+
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public static List<StudentPlainDTO> getAllStudentSigned()
         {
             db_RSAEntities db = new db_RSAEntities();

@@ -256,7 +256,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvStuList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvStuList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStuList.ColumnHeadersHeight = 40;
             this.dgvStuList.CurrentTheme.AlternatingRowsStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
             this.dgvStuList.CurrentTheme.AlternatingRowsStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
             this.dgvStuList.CurrentTheme.AlternatingRowsStyle.ForeColor = System.Drawing.Color.Black;
@@ -288,7 +288,7 @@
             this.dgvStuList.HeaderBackColor = System.Drawing.Color.DodgerBlue;
             this.dgvStuList.HeaderBgColor = System.Drawing.Color.Empty;
             this.dgvStuList.HeaderForeColor = System.Drawing.Color.White;
-            this.dgvStuList.Location = new System.Drawing.Point(109, 111);
+            this.dgvStuList.Location = new System.Drawing.Point(70, 120);
             this.dgvStuList.MultiSelect = false;
             this.dgvStuList.Name = "dgvStuList";
             this.dgvStuList.ReadOnly = true;
@@ -296,7 +296,7 @@
             this.dgvStuList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvStuList.RowTemplate.Height = 40;
             this.dgvStuList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStuList.Size = new System.Drawing.Size(1085, 452);
+            this.dgvStuList.Size = new System.Drawing.Size(1152, 452);
             this.dgvStuList.TabIndex = 38;
             this.dgvStuList.Theme = Bunifu.UI.WinForms.BunifuDataGridView.PresetThemes.Light;
             // 

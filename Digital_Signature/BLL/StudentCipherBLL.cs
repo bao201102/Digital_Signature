@@ -14,11 +14,8 @@ namespace Digital_Signature.BLL
         {
             return StudentCipherDAL.addNewStudent(studentCipher);
         }
-        public static List<object> getAllStudent()
-        {
-            return StudentCipherDAL.getAllStudent();
-        }
-        public static List<StudentCipherDTO> getStudentsSigned(int userId)
+
+        public static StudentCipherDTO getStudentsSigned(int userId)
         {
             return StudentCipherDAL.getStudentsSigned(userId);
         }

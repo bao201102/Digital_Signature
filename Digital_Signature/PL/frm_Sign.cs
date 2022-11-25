@@ -101,6 +101,7 @@ namespace Digital_Signature
                 cipherInfoList.Add(item.Key, digSig.Sign(item.Value.ToString().Split(' '), eKey, KeyBLL.getKeyByUserId(user_id).n));
             }
 
+            //Add to database
             StudentPlainDTO studentPlain = new StudentPlainDTO(0, strInfoList["txtName"].ToString(), strInfoList["cbGender"].ToString(), dateBirth.Value, strInfoList["txtYear"].ToString(), strInfoList["txtEmail"].ToString(), strInfoList["txtBorn"].ToString(), strInfoList["txtPhone"].ToString(), strInfoList["cbReligion"].ToString(), user_id, 1);
             bool resultAddPlain = StudentPlainBLL.addNewStudent(studentPlain);
 
@@ -159,6 +160,7 @@ namespace Digital_Signature
                     if (privateKeyMD5 == KeyBLL.getKeyByUserId(user_id).private_key)
                     {
                         Sign(int.Parse(txtPrivateKey.Text.ToString()));
+                        frm_Sign_Load(sender, e);
                     }
                     else
                     {

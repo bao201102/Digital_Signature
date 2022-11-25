@@ -24,5 +24,10 @@ namespace Digital_Signature.BLL
         {
             return StudentPlainDAL.getStudentSigned(userId);
         }
+
+        public static bool updateStuStatus(StudentPlainDTO studentPlain)
+        {
+            return StudentPlainDAL.updateStuStatus(studentPlain);
+        }
     }
 }

@@ -33,23 +33,6 @@ namespace Digital_Signature.DAL
             }
         }
 
-        public static List<KeyDTO> getAllKey()
-        {
-            db_RSAEntities db = new db_RSAEntities();
-            List<KeyDTO> listKey = new List<KeyDTO>();
-            var query = from qkey in db.tbl_key
-                        select qkey;
-
-            foreach (tbl_key item in query)
-            {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<tbl_key, KeyDTO>());
-                var mapper = new Mapper(config);
-                KeyDTO key = mapper.Map<KeyDTO>(item);
-                listKey.Add(key);
-            }
-            return listKey;
-        }
-
         public static KeyDTO getKeyByUserId(int user_id)
         {
             db_RSAEntities db = new db_RSAEntities();
