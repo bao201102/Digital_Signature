@@ -92,7 +92,6 @@ namespace Digital_Signature
             if (status == 1)
             {
                 int user_id = int.Parse(dgvStuList.SelectedRows[0].Cells[0].Value.ToString());
-                MessageBox.Show(user_id.ToString());
                 StudentPlainDTO stuPlain = StudentPlainBLL.getStudentSigned(user_id);
                 StudentCipherDTO stuCipher = StudentCipherBLL.getStudentsSigned(user_id);
                 KeyDTO key = KeyBLL.getKeyByUserId(user_id);
